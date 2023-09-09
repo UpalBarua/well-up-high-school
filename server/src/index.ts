@@ -4,6 +4,7 @@ import express from 'express';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
+import noticeRoute from "./routes/noticeRoutes"
 
 dotenv.config();
 
@@ -14,6 +15,8 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet());
 app.use(morgan('dev'));
+
+app.use('/api', noticeRoute)
 
 mongoose
   .connect(process.env.DB_URI || '')
