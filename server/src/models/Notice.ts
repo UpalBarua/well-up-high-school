@@ -1,6 +1,6 @@
 import { Schema, model, Document } from "mongoose";
 
-interface INotice extends Document {
+type Notice = {
   title: string;
   description: string;
   pdfLink: string;
@@ -8,26 +8,34 @@ interface INotice extends Document {
   expiryDate: Date;
   author: string;
   tags: string[];
-  status: string;
-  relatedLinks: {
+  status: "Draft" | "Published" | "Archived";
+  relatedLinks: Array<{
     title: string;
     url: string;
-  }[];
-}
+  }>;
+};
 
-const noticeSchema = new Schema<INotice>(
+const noticeSchema = new Schema<Notice>(
   {
     title: {
       type: String,
       required: true,
+      minLength: 1,
+      maxLength: 255,
     },
     description: {
       type: String,
       required: true,
+      minLength: 10,
+      maxLength: 2000,
     },
     pdfLink: {
       type: String,
       required: true,
+      validate: {
+        validator: (v: string) => /^(http|https):\/\/[^ "]+$/.test(v),
+        message: "Invalid URL format",
+      },
     },
     postedDate: {
       type: Date,
@@ -48,6 +56,7 @@ const noticeSchema = new Schema<INotice>(
     status: {
       type: String,
       required: true,
+      enum: ["Draft", "Published", "Archived"],
     },
     relatedLinks: [
       {
@@ -58,6 +67,10 @@ const noticeSchema = new Schema<INotice>(
         url: {
           type: String,
           required: true,
+          validate: {
+            validator: (v: string) => /^(http|https):\/\/[^ "]+$/.test(v),
+            message: "Invalid URL format",
+          },
         },
       },
     ],
@@ -65,6 +78,6 @@ const noticeSchema = new Schema<INotice>(
   { timestamps: true }
 );
 
-const Notice = model<INotice>("Notice", noticeSchema);
+const NoticeModel = model<Notice>("Notice", noticeSchema);
 
-export default Notice;
+export default NoticeModel;

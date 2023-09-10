@@ -1,50 +1,45 @@
 import { Request, Response } from "express";
-import Notice from "../models/Notice";
+import { z } from "zod";
+import NoticeModel from "../models/Notice";
 
-// Create a new notice
+const noticeSchema = z.object({
+  title: z.string().min(1).max(255),
+  description: z.string().min(10).max(2000),
+  pdfLink: z.string().url(),
+  postedDate: z.string(),
+  expiryDate: z.string(),
+  author: z.string(),
+  tags: z.array(z.string()),
+  status: z.enum(["Draft", "Published", "Archived"]),
+  relatedLinks: z.array(
+    z.object({
+      title: z.string(),
+      url: z.string().url(),
+    })
+  ),
+});
+
+//post notice
 export const createNotice = async (req: Request, res: Response) => {
   try {
-    const {
-      title,
-      description,
-      pdfLink,
-      postedDate,
-      expiryDate,
-      author,
-      tags,
-      status,
-      relatedLinks,
-    } = req.body;
+    const parsedNotice = noticeSchema.safeParse(req.body);
 
-    if (
-      !title ||
-      !description ||
-      !pdfLink ||
-      !postedDate ||
-      !expiryDate ||
-      !author ||
-      !tags ||
-      !status ||
-      !relatedLinks
-    ) {
-      return res
-        .status(400)
-        .json({ message: "Please provide all required notice fields." });
+    if (!parsedNotice.success) {
+      return res.status(400).json({
+        message: "Invalid notice data",
+        errors: {
+          formErrors: [],
+          fieldErrors: parsedNotice.error.flatten(),
+        },
+      });
     }
 
-    const notice = new Notice({
-      title,
-      description,
-      pdfLink,
-      postedDate,
-      expiryDate,
-      author,
-      tags,
-      status,
-      relatedLinks,
-    });
+    const postedDate = new Date(parsedNotice.data.postedDate);
+    const expiryDate = new Date(parsedNotice.data.expiryDate);
 
-    const savedNotice = await notice.save();
+    const noticeData = { ...parsedNotice.data, postedDate, expiryDate };
+
+    const savedNotice = await NoticeModel.create(noticeData);
     res.status(201).json(savedNotice);
   } catch (error) {
     console.error(error);
@@ -52,10 +47,10 @@ export const createNotice = async (req: Request, res: Response) => {
   }
 };
 
-// Get all notice
+//get notices
 export const getNotices = async (req: Request, res: Response) => {
   try {
-    const notices = await Notice.find().sort({ postedDate: -1 });
+    const notices = await NoticeModel.find().sort({ postedDate: -1 });
     res.status(200).json(notices);
   } catch (error) {
     console.error(error);
@@ -63,10 +58,10 @@ export const getNotices = async (req: Request, res: Response) => {
   }
 };
 
-//Get a specific notice by ID
+//get notice by id
 export const getNoticesById = async (req: Request, res: Response) => {
   try {
-    const notice = await Notice.findById(req.params.id);
+    const notice = await NoticeModel.findById(req.params.id);
 
     if (!notice) {
       return res.status(404).json({ message: "Notice not found" });
@@ -79,50 +74,25 @@ export const getNoticesById = async (req: Request, res: Response) => {
   }
 };
 
-//Update Notice by ID
+//update notice
 export const updateNotice = async (req: Request, res: Response) => {
   try {
-    const {
-      title,
-      description,
-      pdfLink,
-      postedDate,
-      expiryDate,
-      author,
-      tags,
-      status,
-      relatedLinks,
-    } = req.body;
+    const parsedNotice = noticeSchema.safeParse(req.body);
 
-    if (
-      !title ||
-      !description ||
-      !pdfLink ||
-      !postedDate ||
-      !expiryDate ||
-      !author ||
-      !tags ||
-      !status ||
-      !relatedLinks
-    ) {
+    if (!parsedNotice.success) {
       return res
         .status(400)
-        .json({ message: "Please provide all required notice fields." });
+        .json({ message: "Invalid notice data", errors: parsedNotice.error });
     }
 
-    const updatedNotice = await Notice.findByIdAndUpdate(
+    const postedDate = new Date(parsedNotice.data.postedDate);
+    const expiryDate = new Date(parsedNotice.data.expiryDate);
+
+    const noticeData = { ...parsedNotice.data, postedDate, expiryDate };
+
+    const updatedNotice = await NoticeModel.findByIdAndUpdate(
       req.params.id,
-      {
-        title,
-        description,
-        pdfLink,
-        postedDate,
-        expiryDate,
-        author,
-        tags,
-        status,
-        relatedLinks,
-      },
+      noticeData,
       { new: true }
     );
 
@@ -137,10 +107,10 @@ export const updateNotice = async (req: Request, res: Response) => {
   }
 };
 
-//Delete a notice by ID
-export const deleNotice = async (req: Request, res: Response) => {
+//delete notice
+export const deleteNotice = async (req: Request, res: Response) => {
   try {
-    const deletedNotice = await Notice.findByIdAndDelete(req.params.id);
+    const deletedNotice = await NoticeModel.findByIdAndDelete(req.params.id);
 
     if (!deletedNotice) {
       return res.status(404).json({ message: "Notice not found" });
