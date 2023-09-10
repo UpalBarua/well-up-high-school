@@ -22,7 +22,6 @@ app.use('/api', noticeRoute);
 
 mongoose
   .connect(process.env.DB_URI || '')
-  .connect(process.env.DB_URI || '')
   .then(() => {
     app.listen(port, () => {
       console.log(`[server] running on http://localhost:${port}/`);
