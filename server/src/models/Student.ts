@@ -1,28 +1,46 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, type Document } from "mongoose";
 
-interface StudentInformation extends Document {
+type StudentInformation = Document & {
   firstName: string;
   lastName: string;
+  studentId: number;
+  bloodGroup: string;
   email: string;
   birthdate: Date;
   gender: "Male" | "Female" | "Other";
   address: string;
   phone: string;
-  desiredCourses: {
-    courseName: string;
-    instructor?: string;
-  }[];
+  classInfo: {
+    session: string;
+    group: string;
+    class: string;
+    section: string;
+  };
   registrationDate: Date;
-  status: "Pending" | "Approved" | "Rejected";
-}
+  status: string;
+};
 
 const studentSchema = new Schema<StudentInformation>(
   {
     firstName: {
       type: String,
       required: true,
+      minlength: 1,
+      maxlength: 20,
     },
     lastName: {
+      type: String,
+      required: true,
+      minlength: 1,
+      maxlength: 20,
+    },
+    studentId: {
+      type: Number,
+      required: true,
+      unique: true,
+      maxlength: 6,
+    },
+    bloodGroup: {
       type: String,
       required: true,
     },
@@ -44,20 +62,31 @@ const studentSchema = new Schema<StudentInformation>(
     address: {
       type: String,
       required: true,
+      maxlength: 50,
     },
     phone: {
       type: String,
       required: true,
+      maxlength: 11,
     },
-    desiredCourses: [
-      {
-        courseName: {
-          type: String,
-          required: true,
-        },
-        instructor: String,
+    classInfo: {
+      session: {
+        type: String,
+        required: true,
       },
-    ],
+      group: {
+        type: String,
+        required: true,
+      },
+      class: {
+        type: String,
+        required: true,
+      },
+      section: {
+        type: String,
+        required: true,
+      },
+    },
     registrationDate: {
       type: Date,
       default: Date.now,
