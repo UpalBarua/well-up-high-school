@@ -9,10 +9,10 @@ import {
 
 const router: Router = Router();
 
-router.get("/teachers", getAllTeachers);
-router.get("/teacher/:id", getTeacherById);
-router.post("/teacherCreate", createTeacher);
-router.patch("/teacherUpdate/:id", updateTeacher);
-router.delete("/teacherDelete/:id", deleteTeacher);
+router.get("/", getAllTeachers);
+router.get("/:id", getTeacherById);
+router.post("/create", createTeacher);
+router.patch("/update/:id", updateTeacher);
+router.delete("/delete/:id", deleteTeacher);
 
 export default router;

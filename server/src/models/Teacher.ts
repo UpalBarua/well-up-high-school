@@ -20,10 +20,13 @@ const teacherSchema = new Schema<Teacher>({
   fullName: {
     type: String,
     required: true,
+    minlength:5,
+    maxlength:40,
   },
   email: {
     type: String,
     required: true,
+
   },
   gender: {
     type: String,
@@ -32,6 +35,7 @@ const teacherSchema = new Schema<Teacher>({
   phone: {
     type: String,
     required: true,
+  
   },
   subjects: [String],
   classesTaught: [String],
@@ -48,6 +52,9 @@ const teacherSchema = new Schema<Teacher>({
       degreeName: {
         type: String,
         required: true,
+        minlength:3,
+        maxlength:60,
+
       },
       university: {
         type: String,

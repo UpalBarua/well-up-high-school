@@ -38,13 +38,13 @@ export const getTeacherById = async (req: Request, res: Response) => {
 //post a teacher data
 export const createTeacher = async (req: Request, res: Response) => {
   try {
-    const newTeacher = new TeacherModel(req.body);
-    const TeacherSave = await newTeacher.save();
+    const teacherData = req.body; 
+    const TeacherSave = await TeacherModel.create(teacherData);
     res.status(200).json(TeacherSave);
   } catch (err) {
     res
       .status(500)
-      .json({ message: "There Was an error on Post Teacher", err });
+      .json({ message: "There was an error on Post Teacher", err });
   }
 };
 
