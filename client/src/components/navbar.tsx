@@ -10,6 +10,7 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import Link from "next/link";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -23,14 +24,14 @@ const Navbar = () => {
       <nav className="relative bg-white shadow dark:bg-gray-800 h-[300px] lg:h-[60px]">
         <div className="container px-6 py-3 mx-auto md:flex md:items-center md:justify-between">
           <div className="flex items-center justify-between">
-            <a href="#">
+            <Link href="#">
               <Image
                 src="https://wellup.ro/wp-content/uploads/2021/12/wellup-logo-e1643381957898.png"
                 alt=""
                 width={70}
                 height={70}
               ></Image>
-            </a>
+            </Link>
 
             <div className="md:hidden">
               <button
