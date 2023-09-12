@@ -99,6 +99,16 @@ const Navbar = () => {
                   <MenubarItem>Student Result</MenubarItem>
                 </MenubarContent>
               </MenubarMenu>
+              {/* for club */}
+              <MenubarMenu>
+                <MenubarTrigger className="text-[1rem]">Club</MenubarTrigger>
+                <MenubarContent>
+                  <MenubarItem>Science Club</MenubarItem>
+                  <MenubarItem>Sports Club</MenubarItem>
+                  <MenubarItem>Cultural Club</MenubarItem>
+                  <MenubarItem>Art Club</MenubarItem>
+                </MenubarContent>
+              </MenubarMenu>
               {/* authentication button */}
               <MenubarMenu>
                 <MenubarTrigger className="bg-red-700 hover:bg-red-500 text-white font-bold py-2 px-4 rounded">
