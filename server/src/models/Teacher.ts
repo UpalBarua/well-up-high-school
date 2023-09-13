@@ -1,6 +1,6 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, type Document } from 'mongoose';
 
-type Teacher = Document & {
+type TeacherDocument = Document & {
   fullName: string;
   email: string;
   gender: string;
@@ -16,7 +16,7 @@ type Teacher = Document & {
   }[];
 };
 
-const teacherSchema = new Schema<Teacher>({
+const teacherSchema = new Schema<TeacherDocument>({
   fullName: {
     type: String,
     required: true,
@@ -79,6 +79,6 @@ const teacherSchema = new Schema<Teacher>({
   ],
 });
 
-const TeacherModel = model<Teacher>("Teacher", teacherSchema);
+const TeacherModel = model<TeacherDocument>('Teacher', teacherSchema);
 
 export default TeacherModel;

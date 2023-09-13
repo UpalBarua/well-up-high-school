@@ -1,17 +1,17 @@
-import { Router } from "express";
+import { Router } from 'express';
 import {
   createStudent,
   deleteStudenyByID,
   getAllstudents,
   getStudentById,
   updateStudentById,
-} from "../controllers/studentController";
+} from '../controllers/studentController';
 
 const router: Router = Router();
-router.post("/students", createStudent);
-router.get("/students", getAllstudents);
-router.get("/student/:id", getStudentById);
-router.patch("/student/:id", updateStudentById);
-router.delete("/student/:id", deleteStudenyByID);
+router.post('/', createStudent);
+router.get('/', getAllstudents);
+router.get('/:id', getStudentById);
+router.patch('/:id', updateStudentById);
+router.delete('/:id', deleteStudenyByID);
 
 export default router;

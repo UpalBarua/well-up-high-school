@@ -11,16 +11,16 @@ import teacherRoutes from './routes/teacherRoutes';
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 8081;
+const port = process.env.PORT || 8080;
 
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
 app.use(morgan('dev'));
 
-app.use('/api', studentRoutes);
-app.use('/api', noticeRoute);
-app.use('/api/teacher', teacherRoutes);
+app.use('/api/notices', noticeRoute);
+app.use('/api/students', studentRoutes);
+app.use('/api/teachers', teacherRoutes);
 
 mongoose
   .connect(process.env.DB_URI || '')

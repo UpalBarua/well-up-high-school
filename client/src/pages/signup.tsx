@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import Sign from "../../public/signUp.svg";
-import Image from "next/image";
-import { ErrorMessage } from "@hookform/error-message";
+import React, { useEffect } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import Sign from '../../public/signUp.svg';
+import Image from 'next/image';
+import { ErrorMessage } from '@hookform/error-message';
 
 type Inputs = {
   firstName: string;
@@ -53,7 +53,7 @@ const SignUp = () => {
                   id="first_name"
                   placeholder="FirstName."
                   className="appearance-none border rounded p-4 w-56 h-14 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  {...register("firstName", {
+                  {...register('firstName', {
                     required: true,
                   })}
                 />
@@ -68,7 +68,7 @@ const SignUp = () => {
                   id="last_Name"
                   placeholder="LastName"
                   className="appearance-none border rounded  p-4 w-56 h-14 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  {...register("lastName", {
+                  {...register('lastName', {
                     required: true,
                   })}
                 />
@@ -85,7 +85,7 @@ const SignUp = () => {
                   id="address"
                   placeholder="address"
                   className="appearance-none border rounded p-4 w-56 h-14 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  {...register("address", { required: true })}
+                  {...register('address', { required: true })}
                 />
               </div>
               {/* from control for mobile */}
@@ -98,7 +98,7 @@ const SignUp = () => {
                   id="mobile"
                   placeholder="mobile"
                   className="appearance-none border rounded  p-4 w-56 h-14 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  {...register("mobile", { required: true })}
+                  {...register('mobile', { required: true })}
                 />
               </div>
             </div>
@@ -113,7 +113,7 @@ const SignUp = () => {
                   id="email"
                   placeholder="Email"
                   className="appearance-none border rounded p-4 w-56 h-14 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  {...register("email", { required: true })}
+                  {...register('email', { required: true })}
                 />
               </div>
               {/* from control for password */}
@@ -126,20 +126,19 @@ const SignUp = () => {
                   id="password"
                   placeholder="password"
                   className="appearance-none border rounded p-4 w-56 h-14 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  {...register("password", { required: true })}
+                  {...register('password', { required: true })}
                 />
               </div>
             </div>
 
-            {/*            
+            {/*
             <input {...register("exampleRequired", { required: true })} />
-          
+
             {errors.exampleRequired && <span>This field is required</span>} */}
 
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 mt-4 w-full text-white font-bold py-2 px-4"
-            >
+              className="bg-blue-500 hover:bg-blue-700 mt-4 w-full text-white font-bold py-2 px-4">
               SignUp
             </button>
           </form>
