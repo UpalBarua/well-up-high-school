@@ -38,7 +38,8 @@ export const getTeacherById = async (req: Request, res: Response) => {
 //post a teacher data
 export const createTeacher = async (req: Request, res: Response) => {
   try {
-    const teacherData = req.body; 
+    const teacherData = req.body;
+    // console.log(teacherData);
     const TeacherSave = await TeacherModel.create(teacherData);
     res.status(200).json(TeacherSave);
   } catch (err) {
