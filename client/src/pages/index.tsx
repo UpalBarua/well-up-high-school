@@ -1,6 +1,6 @@
-import React from "react";
-import { Button } from "@/components/ui/button";
-import ContactUs from "@/components/contactUs";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import ContactUs from '@/components/contactUs';
 
 const Home = () => {
   return (
