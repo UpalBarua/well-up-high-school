@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 import morgan from 'morgan';
 import studentRoutes from './routes/studentRoutes';
 import noticeRoute from './routes/noticeRoutes';
+import teacherRoutes from './routes/teacherRoutes';
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(morgan('dev'));
 
 app.use('/api', studentRoutes);
 app.use('/api', noticeRoute);
+app.use('/api/teacher', teacherRoutes);
 
 mongoose
   .connect(process.env.DB_URI || '')

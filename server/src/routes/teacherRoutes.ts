@@ -11,8 +11,8 @@ const router: Router = Router();
 
 router.get("/", getAllTeachers);
 router.get("/:id", getTeacherById);
-router.post("/create", createTeacher);
-router.patch("/update/:id", updateTeacher);
-router.delete("/delete/:id", deleteTeacher);
+router.post("/", createTeacher);
+router.patch("/:id", updateTeacher);
+router.delete("/:id", deleteTeacher);
 
 export default router;
