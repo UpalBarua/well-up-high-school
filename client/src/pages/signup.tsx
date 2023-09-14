@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import Sign from '../../public/signUp.svg';
-import Image from 'next/image';
-import { ErrorMessage } from '@hookform/error-message';
+import React, { useEffect } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import Sign from "../../public/signUp.svg";
+import Image from "next/image";
+import { auth } from "@/firebase/firebase.config";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 type Inputs = {
   firstName: string;
@@ -10,7 +11,7 @@ type Inputs = {
   address: string;
   mobile: string;
   email: string;
-  password: number;
+  password: string;
 };
 
 const SignUp = () => {
@@ -21,7 +22,20 @@ const SignUp = () => {
 
     formState: { errors, isSubmitSuccessful },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const { email, password } = data;
+    try {
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log(user);
+    } catch (error) {
+      console.error("Error signing in with Google:", error.message);
+    }
+  };
 
   useEffect(() => {
     if (isSubmitSuccessful) {
@@ -50,10 +64,10 @@ const SignUp = () => {
                 </label>
                 <input
                   type="text"
-                  id="first_name"
+                  id="firstName"
                   placeholder="FirstName."
                   className="appearance-none border rounded p-4 w-56 h-14 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  {...register('firstName', {
+                  {...register("firstName", {
                     required: true,
                   })}
                 />
@@ -68,7 +82,7 @@ const SignUp = () => {
                   id="last_Name"
                   placeholder="LastName"
                   className="appearance-none border rounded  p-4 w-56 h-14 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  {...register('lastName', {
+                  {...register("lastName", {
                     required: true,
                   })}
                 />
@@ -85,7 +99,7 @@ const SignUp = () => {
                   id="address"
                   placeholder="address"
                   className="appearance-none border rounded p-4 w-56 h-14 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  {...register('address', { required: true })}
+                  {...register("address", { required: true })}
                 />
               </div>
               {/* from control for mobile */}
@@ -98,7 +112,7 @@ const SignUp = () => {
                   id="mobile"
                   placeholder="mobile"
                   className="appearance-none border rounded  p-4 w-56 h-14 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  {...register('mobile', { required: true })}
+                  {...register("mobile", { required: true })}
                 />
               </div>
             </div>
@@ -113,7 +127,7 @@ const SignUp = () => {
                   id="email"
                   placeholder="Email"
                   className="appearance-none border rounded p-4 w-56 h-14 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  {...register('email', { required: true })}
+                  {...register("email", { required: true })}
                 />
               </div>
               {/* from control for password */}
@@ -126,7 +140,7 @@ const SignUp = () => {
                   id="password"
                   placeholder="password"
                   className="appearance-none border rounded p-4 w-56 h-14 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  {...register('password', { required: true })}
+                  {...register("password", { required: true })}
                 />
               </div>
             </div>
@@ -138,7 +152,8 @@ const SignUp = () => {
 
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-700 mt-4 w-full text-white font-bold py-2 px-4">
+              className="bg-blue-500 hover:bg-blue-700 mt-4 w-full text-white font-bold py-2 px-4"
+            >
               SignUp
             </button>
           </form>
