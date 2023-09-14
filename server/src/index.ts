@@ -4,6 +4,9 @@ import express from 'express';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
 import morgan from 'morgan';
+import studentRoutes from './routes/studentRoutes';
+import noticeRoute from './routes/noticeRoutes';
+import teacherRoutes from './routes/teacherRoutes';
 
 dotenv.config();
 
@@ -14,6 +17,10 @@ app.use(express.json());
 app.use(cors());
 app.use(helmet());
 app.use(morgan('dev'));
+
+app.use('/api/notices', noticeRoute);
+app.use('/api/students', studentRoutes);
+app.use('/api/teachers', teacherRoutes);
 
 mongoose
   .connect(process.env.DB_URI || '')
