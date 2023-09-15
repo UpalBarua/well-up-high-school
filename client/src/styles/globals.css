@@ -79,3 +79,7 @@ html,
 body {
   @apply bg-blue-50;
 }
+
+* {
+  /* border: 1px solid rgba(255, 0, 0, 0.25); */
+}
