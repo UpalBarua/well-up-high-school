@@ -18,9 +18,9 @@ app.use(cors());
 app.use(helmet());
 app.use(morgan('dev'));
 
-app.use('/api', studentRoutes);
-app.use('/api', noticeRoute);
-app.use('/api/teacher', teacherRoutes);
+app.use('/api/notices', noticeRoute);
+app.use('/api/students', studentRoutes);
+app.use('/api/teachers', teacherRoutes);
 
 mongoose
   .connect(process.env.DB_URI || '')

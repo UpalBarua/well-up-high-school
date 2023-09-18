@@ -1,13 +1,13 @@
-import { Schema, model, type Document } from "mongoose";
+import { Schema, model, type Document } from 'mongoose';
 
-type StudentInformation = Document & {
+type StudentDocument = Document & {
   firstName: string;
   lastName: string;
-  studentId: number;
+  studentId: string;
   bloodGroup: string;
   email: string;
-  birthdate: Date;
-  gender: "Male" | "Female" | "Other";
+  birthDate: Date;
+  gender: 'Male' | 'Female' | 'Other';
   address: string;
   phone: string;
   classInfo: {
@@ -20,7 +20,7 @@ type StudentInformation = Document & {
   status: string;
 };
 
-const studentSchema = new Schema<StudentInformation>(
+const studentSchema = new Schema<StudentDocument>(
   {
     firstName: {
       type: String,
@@ -35,7 +35,7 @@ const studentSchema = new Schema<StudentInformation>(
       maxlength: 20,
     },
     studentId: {
-      type: Number,
+      type: String,
       required: true,
       unique: true,
       maxlength: 6,
@@ -50,13 +50,13 @@ const studentSchema = new Schema<StudentInformation>(
       unique: true,
       lowercase: true,
     },
-    birthdate: {
+    birthDate: {
       type: Date,
       required: true,
     },
     gender: {
       type: String,
-      enum: ["Male", "Female", "Other"],
+      enum: ['Male', 'Female', 'Other'],
       required: true,
     },
     address: {
@@ -89,12 +89,12 @@ const studentSchema = new Schema<StudentInformation>(
     },
     registrationDate: {
       type: Date,
-      default: Date.now,
+      default: new Date(),
     },
     status: {
       type: String,
-      enum: ["Pending", "Approved", "Rejected"],
-      default: "Pending",
+      enum: ['Pending', 'Approved', 'Rejected'],
+      default: 'Pending',
     },
   },
   {
@@ -102,5 +102,5 @@ const studentSchema = new Schema<StudentInformation>(
   }
 );
 
-const Student = model<StudentInformation>("student", studentSchema);
+const Student = model<StudentDocument>('student', studentSchema);
 export default Student;

@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Sign from "../../public/signUp.svg";
 import Image from "next/image";
-import { ErrorMessage } from "@hookform/error-message";
+import { auth } from "@/firebase/firebase.config";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 type Inputs = {
   firstName: string;
@@ -10,7 +11,7 @@ type Inputs = {
   address: string;
   mobile: string;
   email: string;
-  password: number;
+  password: string;
 };
 
 const SignUp = () => {
@@ -21,7 +22,20 @@ const SignUp = () => {
 
     formState: { errors, isSubmitSuccessful },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const { email, password } = data;
+    try {
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log(user);
+    } catch (error) {
+      console.error("Error signing in with Google:", error.message);
+    }
+  };
 
   useEffect(() => {
     if (isSubmitSuccessful) {
@@ -50,7 +64,7 @@ const SignUp = () => {
                 </label>
                 <input
                   type="text"
-                  id="first_name"
+                  id="firstName"
                   placeholder="FirstName."
                   className="appearance-none border rounded p-4 w-56 h-14 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   {...register("firstName", {
@@ -131,9 +145,9 @@ const SignUp = () => {
               </div>
             </div>
 
-            {/*            
+            {/*
             <input {...register("exampleRequired", { required: true })} />
-          
+
             {errors.exampleRequired && <span>This field is required</span>} */}
 
             <button

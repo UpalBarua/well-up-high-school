@@ -1,6 +1,6 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, type Document } from 'mongoose';
 
-type Notice = {
+type NoticeDocument = Document & {
   title: string;
   description: string;
   pdfLink: string;
@@ -8,14 +8,14 @@ type Notice = {
   expiryDate: Date;
   author: string;
   tags: string[];
-  status: "Draft" | "Published" | "Archived";
-  relatedLinks: Array<{
+  status: 'Draft' | 'Published' | 'Archived';
+  relatedLinks: {
     title: string;
     url: string;
-  }>;
+  }[];
 };
 
-const noticeSchema = new Schema<Notice>(
+const noticeSchema = new Schema<NoticeDocument>(
   {
     title: {
       type: String,
@@ -34,12 +34,13 @@ const noticeSchema = new Schema<Notice>(
       required: true,
       validate: {
         validator: (v: string) => /^(http|https):\/\/[^ "]+$/.test(v),
-        message: "Invalid URL format",
+        message: 'Invalid URL format',
       },
     },
     postedDate: {
       type: Date,
       required: true,
+      default: new Date(),
     },
     expiryDate: {
       type: Date,
@@ -48,6 +49,7 @@ const noticeSchema = new Schema<Notice>(
     author: {
       type: String,
       required: true,
+      default: 'principal',
     },
     tags: {
       type: [String],
@@ -56,7 +58,7 @@ const noticeSchema = new Schema<Notice>(
     status: {
       type: String,
       required: true,
-      enum: ["Draft", "Published", "Archived"],
+      enum: ['Draft', 'Published', 'Archived'],
     },
     relatedLinks: [
       {
@@ -69,7 +71,7 @@ const noticeSchema = new Schema<Notice>(
           required: true,
           validate: {
             validator: (v: string) => /^(http|https):\/\/[^ "]+$/.test(v),
-            message: "Invalid URL format",
+            message: 'Invalid URL format',
           },
         },
       },
@@ -78,6 +80,6 @@ const noticeSchema = new Schema<Notice>(
   { timestamps: true }
 );
 
-const NoticeModel = model<Notice>("Notice", noticeSchema);
+const NoticeModel = model<NoticeDocument>('Notice', noticeSchema);
 
 export default NoticeModel;

@@ -24,7 +24,7 @@ const Navbar = () => {
       <nav className="relative bg-white shadow dark:bg-gray-800 h-[300px] lg:h-[60px]">
         <div className="container px-6 py-3 mx-auto md:flex md:items-center md:justify-between">
           <div className="flex items-center justify-between">
-            <Link href="#">
+            <Link href="/">
               <Image
                 src="https://wellup.ro/wp-content/uploads/2021/12/wellup-logo-e1643381957898.png"
                 alt=""
