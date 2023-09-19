@@ -7,19 +7,10 @@ import {
 } from '@/components/ui/menubar';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
-import { BsReverseLayoutTextSidebarReverse } from 'react-icons/bs';
-import { GiTireIronCross } from 'react-icons/gi';
-import { GrUserManager } from 'react-icons/gr';
 import { BiChevronDown } from 'react-icons/bi';
+import MobileMenu from './mobile-menu';
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
     <header className="container sticky top-0 bg-accent-50 flex items-center justify-between py-2">
       <Link href="/" className="flex items-center gap-3">
@@ -91,6 +82,7 @@ const Navbar = () => {
           </MenubarMenu>
         </Menubar>
       </nav>
+      <MobileMenu />
     </header>
   );
 };
