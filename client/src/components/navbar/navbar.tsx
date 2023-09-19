@@ -12,7 +12,7 @@ import MobileMenu from './mobile-menu';
 
 const Navbar = () => {
   return (
-    <header className="container sticky top-0 bg-accent-50 flex items-center justify-between py-2">
+    <header className="container sticky top-0 bg-accent-50/80 backdrop-blur-sm flex items-center justify-between py-2">
       <Link href="/" className="flex items-center gap-3">
         <div className="relative h-8 w-8">
           <Image src="/logo.png" alt="logo" fill />
