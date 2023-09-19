@@ -7,7 +7,6 @@ import { useAuth } from '@/contexts/auth-context';
 
 const Home = () => {
   const auth = useAuth();
-
   return (
     <div>
       <h1>Hello well up high school!</h1>
