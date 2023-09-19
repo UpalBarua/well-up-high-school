@@ -4,6 +4,7 @@ import CreateNoticeForm from '@/components/NoticeForm';
 import ContactUs from '@/components/contactUs';
 import TeacherForm from '@/components/TeacherForm/TeacherForm';
 import { useAuth } from '@/contexts/auth-context';
+import PhotoGellery from '@/components/Gellery/PhotoGellery/PhotoGellery';
 
 const Home = () => {
   const auth = useAuth();
@@ -15,6 +16,7 @@ const Home = () => {
       <CreateNoticeForm></CreateNoticeForm>
       <TeacherForm></TeacherForm>
       <ContactUs></ContactUs>
+      <PhotoGellery></PhotoGellery>
     </div>
   );
 };
