@@ -3,14 +3,12 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import log from "../../public/signIn.svg";
 import Image from "next/image";
 import { ErrorMessage } from "@hookform/error-message";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/firebase/firebase.config";
 
 type Inputs = {
-  firstName: string;
-  lastName: string;
-  address: string;
-  mobile: string;
   email: string;
-  password: number;
+  password: string;
 };
 
 const Login = () => {
@@ -18,10 +16,18 @@ const Login = () => {
     register,
     handleSubmit,
     reset,
-
     formState: { errors, isSubmitSuccessful },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    console.log(data);
+    const { email, password } = data;
+    try {
+      const { user } = await signInWithEmailAndPassword(auth, email, password);
+      console.log(user);
+    } catch (error) {
+      console.error("Error signing in with email and password:", error.message);
+    }
+  };
 
   useEffect(() => {
     if (isSubmitSuccessful) {
