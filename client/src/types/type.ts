@@ -15,3 +15,21 @@ export type RelatedLink = {
     relatedLinks: RelatedLink[];
   };
   
+
+
+  export type Teacher = {
+    _id: string;
+    fullName: string;
+    email: string;
+    gender: string;
+    phone: string;
+    subjects: string[];
+    classesTaught: string[];
+    yearsOfExperience: number;
+    specializedRole: string;
+    degrees: {
+      degreeName: string;
+      university: string;
+      year: string;
+    }[];
+  };
