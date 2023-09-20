@@ -25,7 +25,7 @@ const TeachersList: React.FC = () => {
         Meet Our Teachers
       </h1>
       {isLoading ? (
-        <div className="text-center my-4"></div>
+        <div className="text-center my-4">Loading....</div>
       ) : teachers.length === 0 ? (
         <div className="text-center my-4">No teachers found.</div>
       ) : (
