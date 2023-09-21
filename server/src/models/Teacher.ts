@@ -73,24 +73,28 @@ const teacherSchema = new Schema<TeacherDocument>({
     required: true,
     default: 'guest teacher',
   },
-  degrees: [
-    {
-      degreeName: {
-        type: String,
-        required: true,
-        minlength: [5, 'degreeName must be at least 5 characters.'],
-        maxlength: [25, 'degreeName cannot exceed 25 characters.'],
+  degrees: {
+    type: [
+      {
+        degreeName: {
+          type: String,
+          required: true,
+          minlength: [5, 'degreeName must be at least 5 characters.'],
+          maxlength: [25, 'degreeName cannot exceed 25 characters.'],
+        },
+        university: {
+          type: String,
+          required: true,
+        },
+        year: {
+          type: Number,
+          required: true,
+        },
       },
-      university: {
-        type: String,
-        required: true,
-      },
-      year: {
-        type: Number,
-        required: true,
-      },
-    },
-  ],
+    ],
+    required: true,
+    minlength: 1,
+  },
 });
 
 const TeacherModel = model<TeacherDocument>('Teacher', teacherSchema);

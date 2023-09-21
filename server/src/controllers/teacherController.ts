@@ -1,66 +1,136 @@
-import { type Request, type Response } from "express";
-import TeacherModel from "../models/Teacher";
+import { type Request, type Response } from 'express';
+import { isValidObjectId } from 'mongoose';
+import Teacher from '../models/Teacher';
+import z from 'zod';
 
-//get all teachers data
+const teacherSchema = z.object({
+  name: z.string().min(5).max(25),
+  email: z.string().email(),
+  gender: z.enum(['male', 'female', 'other']),
+  phone: z.string().max(11),
+  subjects: z.array(z.string()).min(1),
+  classes: z.array(z.string()).min(1),
+  experience: z.number().min(0).max(50),
+  role: z.enum([
+    'principal',
+    'vice principal',
+    'senior teacher',
+    'assistant teacher',
+    'guest teacher',
+  ]),
+  degrees: z
+    .array(
+      z.object({
+        degreeName: z.string().min(5).max(25),
+        university: z.string(),
+        year: z.number(),
+      })
+    )
+    .min(1),
+});
+
 export const getAllTeachers = async (req: Request, res: Response) => {
   try {
-    const teachers = await TeacherModel.find();
+    const foundTeachers = await Teacher.find({});
 
-    if (teachers) {
-      return res.status(200).json(teachers);
+    if (foundTeachers) {
+      return res.status(200).json({
+        success: true,
+        message: 'Teachers retrieved successfully',
+        data: foundTeachers,
+      });
     }
 
-    res.status(404).json({ message: "Teachers not found on getallTeachers" });
-  } catch (err) {
-    res
-      .status(500)
-      .json({ error: "There was an error while fetching the teachers", err });
+    res.status(404).json({
+      success: false,
+      message: 'No teachers found',
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Failed to retrieve teachers',
+    });
   }
 };
 
-//get a single teacher
 export const getTeacherById = async (req: Request, res: Response) => {
   try {
-    const teacher = await TeacherModel.findById(req.params.id);
+    const { id } = req.params;
 
-    if (teacher) {
-      return res.status(200).json(teacher);
+    if (!isValidObjectId(id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid teacher id',
+      });
     }
 
-    res.status(404).json({ error: "Teacher not found on Single Teacher" });
+    const foundTeacher = await Teacher.findById(id);
+
+    if (foundTeacher) {
+      return res.status(200).json({
+        success: true,
+        message: 'Teacher retrieved successfully',
+        data: foundTeacher,
+      });
+    }
+
+    res.status(404).json({
+      success: false,
+      message: 'Specified teacher not found',
+    });
   } catch (err) {
     res
       .status(500)
-      .json({ error: "There was an error while fetching the teacher", err });
+      .json({ error: 'There was an error while fetching the teacher', err });
   }
 };
 
-//post a teacher data
 export const createTeacher = async (req: Request, res: Response) => {
   try {
-    const teacherData = req.body;
-    // console.log(teacherData);
-    const TeacherSave = await TeacherModel.create(teacherData);
-    res.status(200).json(TeacherSave);
+    const { body } = req;
+
+    const validationResults = teacherSchema.safeParse(body);
+
+    if (!validationResults.success) {
+      return res.status(400).json({
+        success: false,
+        message: 'Body must be a valid.',
+      });
+    }
+
+    const createdTeacher = await Teacher.create(validationResults.data);
+
+    if (createdTeacher) {
+      return res.status(200).json({
+        success: true,
+        message: 'Successfully created new teacher.',
+        data: createdTeacher,
+      });
+    }
+
+    res.status(400).json({
+      success: false,
+      message: 'Failed to create new teacher',
+    });
   } catch (err) {
     res
       .status(500)
-      .json({ message: "There was an error on Post Teacher", err });
+      .json({ message: 'There was an error on Post Teacher', err });
   }
 };
 
 // delete teacher;
 export const deleteTeacher = async (req: Request, res: Response) => {
   try {
-    const deletedTeacher = await TeacherModel.findByIdAndDelete(req.params.id);
+    const deletedTeacher = await Teacher.findByIdAndDelete(req.params.id);
     if (deletedTeacher) {
-      return res.status(200).json({ message: "Teacher deleted successfully" });
+      return res.status(200).json({ message: 'Teacher deleted successfully' });
     }
-    res.status(404).json({ error: "Teacher was not Deleted " });
+    res.status(404).json({ error: 'Teacher was not Deleted ' });
   } catch (err) {
     res
       .status(500)
-      .json({ message: "There Was an error on Delete Teacher", err });
+      .json({ message: 'There Was an error on Delete Teacher', err });
   }
 };
 
@@ -78,7 +148,7 @@ export const updateTeacher = async (req: Request, res: Response) => {
   } = req.body;
 
   try {
-    const updatedTeacher = await TeacherModel.findByIdAndUpdate(
+    const updatedTeacher = await Teacher.findByIdAndUpdate(
       { _id: req.params.id },
       {
         $set: {
@@ -99,8 +169,8 @@ export const updateTeacher = async (req: Request, res: Response) => {
       return res.status(200).json(updatedTeacher);
     }
 
-    res.status(404).json({ message: "Teacher was not Updated" });
+    res.status(404).json({ message: 'Teacher was not Updated' });
   } catch (error) {
-    res.status(500).json({ message: "Server Error" });
+    res.status(500).json({ message: 'Server Error' });
   }
 };
