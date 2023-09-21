@@ -1,6 +1,7 @@
 import { uploadFile } from "@/lib/upload-file";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import CustomButton from "./CustomButton";
 
 interface Image {
   name: string;
@@ -67,12 +68,12 @@ const ImageUploader = () => {
           accept="image/*"
           onChange={handleFileChange}
         />
-        <button
+        <CustomButton
           onClick={handleUpload}
-          className="py-1 px-6 bg-blue-600 text-white mt-1"
+          className="py-0 bg-gray-600 hover:bg-gray-800"
         >
           Upload
-        </button>
+        </CustomButton>
 
         <button
           type="submit"
