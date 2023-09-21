@@ -1,4 +1,9 @@
-export type Notice = {
+export type RelatedLink = {
+  title: string;
+  url: string;
+};
+
+export type NoticeFormData = {
   title: string;
   description: string;
   pdfLink: string;
@@ -7,8 +12,22 @@ export type Notice = {
   author: string;
   tags: string;
   status: string;
-  relatedLinks: {
-    title: string;
-    url: string;
+  relatedLinks: RelatedLink[];
+};
+
+export type Teacher = {
+  _id: string;
+  fullName: string;
+  email: string;
+  gender: string;
+  phone: string;
+  subjects: string[];
+  classesTaught: string[];
+  yearsOfExperience: number;
+  specializedRole: string;
+  degrees: {
+    degreeName: string;
+    university: string;
+    year: string;
   }[];
 };
