@@ -6,6 +6,8 @@ import { BiBarChartSquare } from 'react-icons/bi';
 import { HiOutlineUserGroup } from 'react-icons/hi';
 import { MdOutlineManageAccounts, MdOutlinePermMedia } from 'react-icons/md';
 import { PiChalkboardTeacher, PiStudent } from 'react-icons/pi';
+import { cn } from '@/lib/utils';
+import { useRouter } from 'next/router';
 
 const NAV_OPTIONS = [
   {
@@ -46,10 +48,12 @@ const NAV_OPTIONS = [
 ];
 
 const DashboardLayout = ({ children }: { children: ReactNode }) => {
+  const { pathname } = useRouter();
+
   return (
     <div className="container flex gap-5 relative">
-      <aside className="w-56 hidden md:block border-r-2">
-        <div className="fixed h-full w-56 p-4 space-y-4">
+      <aside className="w-60 hidden md:block border-r-2">
+        <div className="fixed h-full w-60 p-4 space-y-4">
           <Link href="/dashboard" className="flex items-center gap-2">
             <div className="relative h-6 w-6">
               <Image src="/logo.png" alt="logo" fill />
@@ -57,13 +61,17 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
             <h1 className="font-bold">Well Up High School</h1>
           </Link>
           <nav>
-            <h2 className="text-primary-900 pb-2">Main Menu</h2>
+            <h2 className="text-primary-900 text-sm pb-2">Main Menu</h2>
             <ul className="space-y-1.5 font-medium">
               {NAV_OPTIONS.map(({ title, href, Icon }) => (
                 <li key={href}>
                   <Link
                     href={href}
-                    className="flex select-none items-center rounded-md px-2 py-1.5 outline-none focus:bg-accent gap-1.5 focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground hover:bg-accent-100 hover:text-accent-600 border border-transparent hover:border-primary-50/50">
+                    className={cn(
+                      'flex select-none items-center rounded-md px-2 py-1.5 outline-none focus:bg-accent gap-1.5 focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground hover:bg-accent-100 hover:text-accent-600 border border-transparent hover:border-primary-50/50',
+                      pathname === href &&
+                        'bg-accent-100 text-accent-600 border-primary-50/50'
+                    )}>
                     {Icon}
                     <span>{title}</span>
                   </Link>
