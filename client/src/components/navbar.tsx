@@ -73,7 +73,7 @@ const Navbar = () => {
                   administrator
                 </MenubarTrigger>
                 <MenubarContent>
-                  <MenubarItem>Teachers</MenubarItem>
+                  <MenubarItem> <Link href="/teachers/" as="/teachers">Teachers</Link></MenubarItem>
                   <MenubarItem>Management</MenubarItem>
                 </MenubarContent>
               </MenubarMenu>

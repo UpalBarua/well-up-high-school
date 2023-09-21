@@ -1,68 +1,79 @@
+import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react';
-import { BsPinAngle } from 'react-icons/bs';
-import { IoNotificationsOutline } from 'react-icons/io5';
-import { Button } from './ui/button';
 import { AiOutlineClockCircle } from 'react-icons/ai';
-import { BiDownload } from 'react-icons/bi';
+import { BsPinAngle } from 'react-icons/bs';
+import { FiDownload } from 'react-icons/fi';
+import { IoNotificationsOutline } from 'react-icons/io5';
+import { formatDistanceToNow } from 'date-fns';
+import Link from 'next/link';
 
-const NoticeCard = () => {
+type NoticeCardProps = {
+  _id: string;
+  title: string;
+  description: string;
+  isPinned: boolean;
+  pdfUrl: string;
+  createdAt: string;
+};
+
+const NoticeCard = ({
+  _id,
+  title,
+  description,
+  pdfUrl,
+  isPinned,
+  createdAt,
+}: NoticeCardProps) => {
   return (
-    <div className="bg-white rounded-lg shadow-sm border flex">
-      <div className="space-y-3.5 p-5">
-        <div className="flex flex-row items-center justify-between">
-          <div className="flex items-center gap-2.5 text-gray-600">
-            <IoNotificationsOutline className="bg-blue-400 text-white rounded p-1.5 text-3xl" />{' '}
-            <span>Notice by </span>
-            <Link
-              className="flex items-center gap-1 text-sm border rounded-full shadow-sm p-1 pe-3"
-              href="#">
-              <div className="relative w-5 h-5 border rounded-full">
-                <Image
-                  className="rounded-full object-center object-cover"
-                  src="/images.jpeg"
-                  alt="image"
-                  fill
-                />
-              </div>
-              <span>The Principal</span>
-            </Link>
+    <Link
+      href={`/notice-board/${_id}`}
+      className="bg-white rounded-xl p-2.5 border sm:p-4  border-gray-300 shadow-sm space-y-2.5 sm:space-y-0 md:flex gap-6">
+      <div className="relative h-48 md:h-auto md:order-1 md:w-[20rem] bg-gray-100 rounded-lg border border-gray-200">
+        {pdfUrl ? (
+          <iframe
+            className="w-full object-cover object-center overflow-hidden h-full rounded-lg border-none"
+            src={pdfUrl}
+          />
+        ) : (
+          <Image
+            className="object-center object-cover"
+            src="pdf.svg"
+            alt="document"
+            fill
+          />
+        )}
+      </div>
+      <div className="space-y-2.5 flex-1">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 text-gray-600">
+            <IoNotificationsOutline className="bg-blue-200 text-blue-500 rounded p-1.5 text-3xl border border-gray-200" />
+            <span className="font-medium">General Notice</span>
           </div>
-          <span className="flex items-center gap-2 bg-red-100 text-red-500 text-sm py-1.5 px-3 rounded-md">
-            <BsPinAngle /> Pinned
-          </span>
+          <div className="flex items-center gap-1.5">
+            {isPinned && (
+              <Button
+                size="sm"
+                className="bg-orange-100 text-orange-500 border border-gray-200">
+                <BsPinAngle />
+                <span className="hidden sm:block">Pinned</span>
+              </Button>
+            )}
+            <Button
+              size="sm"
+              className="bg-green-100 text-green-500 border border-gray-200">
+              <FiDownload />
+              <span className="hidden sm:block">Download PDF</span>
+            </Button>
+          </div>
         </div>
-        <div className="space-y-1">
-          <h3 className="text-xl font-bold">
-            This is a new notice from the principal!
-          </h3>
-          <p className="text-gray-600">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident
-            perferendis cumque itaque aliquam libero doloremque error reiciendis
-            voluptate, sit quod.
-          </p>
-        </div>
-        <div className="flex items-center gap-3 pt-3">
-          <Button variant="outline">
-            <AiOutlineClockCircle className="text-lg" />
-            <span>30 days ago</span>
-          </Button>
-          <Button size="sm">
-            <BiDownload className="text-lg" />
-            <span>Download PDF</span>
-          </Button>
+        <h3 className="text-xl font-bold capitalize break-all">{title}</h3>
+        <p className="text-gray-600">{description}</p>
+        <div className="flex items-center gap-1 text-sm text-gray-500 font-medium">
+          <AiOutlineClockCircle />
+          <span>{formatDistanceToNow(new Date(createdAt)) + ' ago'}</span>
         </div>
       </div>
-      <div className="relative w-[50rem] bg-gray-200 rounded-tr-lg rounded-br-lg">
-        <Image
-          className="object-center object-cover"
-          src="pdf.svg"
-          alt="document"
-          fill
-        />
-      </div>
-    </div>
+    </Link>
   );
 };
 

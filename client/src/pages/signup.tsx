@@ -33,7 +33,7 @@ const SignUp = () => {
       );
       console.log(user);
     } catch (error) {
-      console.error("Error signing in with Google:", error.message);
+      console.error("Error signing in with email and password:", error.message);
     }
   };
 
