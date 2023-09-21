@@ -17,14 +17,14 @@ export type NoticeFormData = {
 
 export type Teacher = {
   _id: string;
-  fullName: string;
+  name: string;
+  gender: 'male' | 'female' | 'other';
   email: string;
-  gender: string;
   phone: string;
   subjects: string[];
-  classesTaught: string[];
-  yearsOfExperience: number;
-  specializedRole: string;
+  classes: string[];
+  experience: number;
+  role: string;
   degrees: {
     degreeName: string;
     university: string;
