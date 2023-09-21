@@ -1,11 +1,11 @@
-import React from "react";
-import contact from "../../public/contact.svg";
-import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { PiMapPinLineBold } from "react-icons/pi";
+import Image from "next/image";
 import { BiSolidPhoneCall } from "react-icons/bi";
 import { CgMail } from "react-icons/cg";
+import { PiMapPinLineBold } from "react-icons/pi";
+import contact from "../../public/contact.svg";
+import CustomButton from "./CustomButton";
 
 const ContactUs = () => {
   return (
@@ -35,9 +35,7 @@ const ContactUs = () => {
             placeholder="Go ahead, we are listening...."
           />
         </div>
-        <button className="bg-blue-500 hover:bg-blue-700 mt-4 w-full text-white font-bold py-2 px-4">
-          Submit
-        </button>
+        <CustomButton className="px-6 w-full">Submit</CustomButton>
       </div>
 
       <div className="mt-6 lg:mt-10">

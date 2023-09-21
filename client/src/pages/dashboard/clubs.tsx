@@ -1,7 +1,7 @@
 import DashboardLayout from '@/layouts/dashboard-layout';
 import { ReactElement } from 'react';
 
-const Dashboard = () => {
+const Clubs = () => {
   return (
     <main>
       <h1 className="text-2xl text-primary-100 font-bold">
@@ -125,8 +125,8 @@ const Dashboard = () => {
   );
 };
 
-Dashboard.getLayout = (page: ReactElement) => {
+Clubs.getLayout = (page: ReactElement) => {
   return <DashboardLayout>{page}</DashboardLayout>;
 };
 
-export default Dashboard;
+export default Clubs;

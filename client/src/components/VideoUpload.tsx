@@ -1,6 +1,7 @@
 import axios from "@/api/axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import CustomButton from "./CustomButton";
 
 interface Video {
   title: string;
@@ -71,12 +72,13 @@ const VideoUpload = () => {
           />
         </div>
 
-        <button
+        {/* <button
           type="submit"
           className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
         >
           Add Video
-        </button>
+        </button> */}
+        <CustomButton>Submit</CustomButton>
       </form>
     </div>
   );
