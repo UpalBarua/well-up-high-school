@@ -1,3 +1,4 @@
+import CounterSection from '@/components/CounterSection';
 import PhotoGellery from '@/components/Gellery/PhotoGellery/PhotoGellery';
 import VideoGallery from '@/components/Gellery/VideoGellery/VideoGallery;';
 import CreateNoticeForm from '@/components/NoticeForm';
@@ -19,9 +20,11 @@ const Home = () => {
       <ContactUs></ContactUs>
       <br />
       <ImageUploader />
+      <CounterSection></CounterSection>
       <VideoUpload />
       <PhotoGellery></PhotoGellery>
       <VideoGallery></VideoGallery>
+      
     </div>
   );
 };
