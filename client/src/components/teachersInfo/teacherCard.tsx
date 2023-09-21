@@ -19,7 +19,7 @@ const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
 
   return (
     <div
-      className="bg-white shadow-md rounded-md p-4 hover:shadow-lg transition duration-100 ease-in-out transform hover:scale-100"
+      className="shadow-md rounded-md p-4 hover:shadow-lg transition duration-100 ease-in-out transform hover:scale-105 border-gray-800"
       style={{ minHeight: "400px" }}
     >
       <div className="flex flex-col items-center space-y-4">
@@ -34,7 +34,7 @@ const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
           <>
             <div className="relative w-32 h-32 rounded-full overflow-hidden">
               <Image
-                src="" // TODO: Replace with the teacher's image URL
+                src="https://img.freepik.com/free-photo/elegant-businessman-office_155003-9641.jpg?size=626&ext=jpg&uid=R79200208&ga=GA1.2.2093189715.1681108557&semt=sph" // TODO: Replace with the teacher's image URL
                 alt={teacher.fullName}
                 layout="fill"
               />
