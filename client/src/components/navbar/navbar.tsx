@@ -40,7 +40,9 @@ const Navbar = () => {
               <BiChevronDown className="text-2xl" />
             </MenubarTrigger>
             <MenubarContent>
-              <MenubarItem><Link href="teachers">Teachers</Link></MenubarItem>
+              <MenubarItem>
+                <Link href="teachers">Teachers</Link>
+              </MenubarItem>
               <MenubarItem>Management</MenubarItem>
             </MenubarContent>
           </MenubarMenu>
