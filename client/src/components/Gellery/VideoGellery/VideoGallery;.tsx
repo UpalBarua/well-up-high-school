@@ -1,77 +1,56 @@
-// ?video url spliting into VedioId for====>> Note when data come from DB then is fucn will be needed
-// const getVideoIdFromUrl= (url)=> {
+import axios from "@/api/axios";
+import React, { useEffect, useState } from "react";
 
-//   if (url.includes('youtube.com/watch?v=')) {
-
-//     const parts = url.split('v=');
-//     if (parts.length === 2) {
-
-//       const videoId = parts[1];
-//       return videoId;
-//     }
-//   }
-//   return null;
-// }
-//  EX-const videoId = getVideoIdFromUrl(youtubeUrl);
-
-import React, { useState } from "react";
-
-const videoData = [
-  {
-    id: "1",
-    title: "Video 1",
-    videoId: "rbdKSNeTQ5k",
-  },
-  {
-    id: "2",
-    title: "Video 2",
-    videoId: "vvkLx-2JSTY",
-  },
-  {
-    id: "3",
-    title: "Video 3",
-    videoId: "5Bxx18NjHhg",
-  },
-  {
-    id: "15",
-    title: "Video 1",
-    videoId: "rbdKSNeTQ5k",
-  },
-  {
-    id: "24",
-    title: "Video 2",
-    videoId: "vvkLx-2JSTY",
-  },
-  {
-    id: "3d",
-    title: "Video 3",
-    videoId: "5Bxx18NjHhg",
-  },
-];
+interface VideoData {
+  _id: string;
+  title: string;
+  url: string;
+  thumbnail: string;
+}
 
 const VideoGallery: React.FC = () => {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
+  const [galleryData, setGalleryData] = useState<VideoData[]>([]);
 
-  const handleVideoClick = (videoId: string) => {
-    setSelectedVideo(videoId);
+  useEffect(() => {
+    axios
+      .get("videos")
+      .then((response) => {
+        setGalleryData(response.data.data);
+        console.log(response.data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+      });
+  }, []);
+
+  const handleVideoClick = (url: string) => {
+    setSelectedVideo(url);
+  };
+
+  const getVideoIdFromUrl = (url: string) => {
+    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?feature=player_embedded&v=))([^&\n?#]+)/);
+    return match ? match[1] : null;
   };
 
   return (
     <div className="">
       <h1 className="text-2xl text-center py-4">Video Gallery</h1>
-      <div className="  grid grid-cols-1  md:grid-cols-2 lg:grid-cols-3 md:gap-6 md:p-5 p-3 ">
-        {videoData.map((video) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-6 md:p-5 p-3 ">
+        {galleryData.map((video) => (
           <div
-            key={video.id}
-            className=" cursor-pointer w-full "
-            onClick={() => handleVideoClick(video.videoId)}
+            key={video._id}
+            className="cursor-pointer w-full "
+            onClick={() => handleVideoClick(video.url)}
           >
             <div>
               <iframe
                 title={video.title}
                 width="100%"
                 height="300"
-                src={`https://www.youtube.com/embed/${video.videoId}`}
+                src={`https://www.youtube.com/embed/${getVideoIdFromUrl(
+                  video.url
+                )}`}
                 allowFullScreen
               ></iframe>
             </div>
