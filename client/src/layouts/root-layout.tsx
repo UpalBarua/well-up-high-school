@@ -4,7 +4,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <Navbar />
-      <main className="container">{children}</main>
+      <main className='w-[90%] mx-auto'>{children}</main>
     </>
   );
 };
