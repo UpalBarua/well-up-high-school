@@ -9,7 +9,9 @@ import {
   type ColumnDef,
 } from '@tanstack/react-table';
 import Image from 'next/image';
+import Link from 'next/link';
 import { ReactElement } from 'react';
+import { Button } from '@/components/ui/button';
 
 const Teachers = () => {
   const { data: teachers = [] as Teacher[] } = useQuery<Teacher[]>({
@@ -59,6 +61,14 @@ const Teachers = () => {
       accessorKey: 'phone',
       header: 'Phone',
     },
+    {
+      header: 'Actions',
+      cell: ({ row }) => (
+        <Button size="sm" variant="secondary" asChild>
+          <Link href={`/dashboard/teachers/${row.original._id}`}>Details</Link>
+        </Button>
+      ),
+    },
   ];
 
   const table = useReactTable({
@@ -69,8 +79,8 @@ const Teachers = () => {
 
   return (
     <main>
-      <h2 className="text-xl font-bold">Teachers</h2>
-      <div className="rounded-md border">
+      <h2 className="text-2xl pb-3 font-bold">Teachers</h2>
+      <div className="rounded-md border bg-white shadow-sm border-primary-50/50">
         <DataTable columns={columns} table={table} />
       </div>
     </main>
