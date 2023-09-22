@@ -7,10 +7,13 @@ import {
   getCoreRowModel,
   useReactTable,
   type ColumnDef,
+  getPaginationRowModel,
+  ColumnFiltersState,
+  getFilteredRowModel,
 } from '@tanstack/react-table';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import { Button } from '@/components/ui/button';
 
 const Teachers = () => {
@@ -21,8 +24,6 @@ const Teachers = () => {
       return data.data;
     },
   });
-
-  console.log(teachers);
 
   const columns: ColumnDef<Teacher>[] = [
     {
@@ -71,18 +72,24 @@ const Teachers = () => {
     },
   ];
 
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+
   const table = useReactTable({
     data: teachers,
     columns,
+    onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      columnFilters,
+    },
   });
 
   return (
     <main>
       <h2 className="text-2xl pb-3 font-bold">Teachers</h2>
-      <div className="rounded-md border bg-white shadow-sm border-primary-50/50">
-        <DataTable columns={columns} table={table} />
-      </div>
+      <DataTable columns={columns} table={table} />
     </main>
   );
 };
