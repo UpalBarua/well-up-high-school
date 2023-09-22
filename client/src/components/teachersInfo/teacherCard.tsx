@@ -37,6 +37,7 @@ const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
                 src="https://img.freepik.com/free-photo/elegant-businessman-office_155003-9641.jpg?size=626&ext=jpg&uid=R79200208&ga=GA1.2.2093189715.1681108557&semt=sph" // TODO: Replace with the teacher's image URL
                 alt={teacher.fullName}
                 layout="fill"
+                className="object-cover"
               />
             </div>
             <h2 className="text-2xl font-semibold text-primary">
