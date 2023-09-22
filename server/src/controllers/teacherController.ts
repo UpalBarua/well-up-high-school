@@ -5,6 +5,7 @@ import z from 'zod';
 
 const teacherSchema = z.object({
   name: z.string().min(5).max(25),
+  imageURL: z.string().url(),
   email: z.string().email(),
   gender: z.enum(['male', 'female', 'other']),
   phone: z.string().max(11),
@@ -95,6 +96,7 @@ export const createTeacher = async (req: Request, res: Response) => {
       return res.status(400).json({
         success: false,
         message: 'Body must be a valid.',
+        error: validationResults.error,
       });
     }
 

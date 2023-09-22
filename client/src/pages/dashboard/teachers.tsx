@@ -8,41 +8,53 @@ import {
   useReactTable,
   type ColumnDef,
 } from '@tanstack/react-table';
+import Image from 'next/image';
 import { ReactElement } from 'react';
 
 const Teachers = () => {
-  const { data: teachers = [] as Teacher[] } = useQuery({
+  const { data: teachers = [] as Teacher[] } = useQuery<Teacher[]>({
     queryKey: ['teachers'],
     queryFn: async () => {
-      const { data } = await axios.get<Teacher[]>('/teachers');
-      return data;
+      const { data } = await axios.get('/teachers');
+      return data.data;
     },
   });
 
+  console.log(teachers);
+
   const columns: ColumnDef<Teacher>[] = [
     {
-      accessorKey: 'fullName',
+      accessorKey: 'imageURL',
+      header: 'Picture',
+      cell: ({ row }) => (
+        <div className="relative aspect-square w-10 rounded-full">
+          <Image
+            className="rounded-full object-center object-cover"
+            src={row.original.imageURL}
+            alt={row.original.name}
+            fill
+          />
+        </div>
+      ),
+    },
+    {
+      accessorKey: 'name',
       header: 'Name',
     },
     {
-      accessorKey: 'specializedRole',
+      accessorKey: 'role',
       header: 'Role',
     },
     {
       accessorKey: 'Subjects',
       header: 'subjects',
-      cell: ({ row }) =>
-        row.original.subjects?.map((subject) => (
-          <span>{subject?.className}</span>
-        )),
+      cell: ({ row }) => <span>{row.original.subjects.join(', ')}</span>,
     },
     {
-      accessorKey: 'classesTaught',
+      accessorKey: 'classes',
       header: 'Classes',
-      cell: ({ row }) =>
-        row.original.classesTaught.map((item) => <span>{item.className}</span>),
+      cell: ({ row }) => <span>{row.original.classes.join(', ')}</span>,
     },
-
     {
       accessorKey: 'phone',
       header: 'Phone',

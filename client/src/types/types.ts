@@ -18,6 +18,7 @@ export type NoticeFormData = {
 export type Teacher = {
   _id: string;
   name: string;
+  imageURL: string;
   gender: 'male' | 'female' | 'other';
   email: string;
   phone: string;

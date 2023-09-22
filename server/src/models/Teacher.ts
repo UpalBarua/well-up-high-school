@@ -2,6 +2,7 @@ import { Schema, model, type Document } from 'mongoose';
 
 type TeacherDocument = Document & {
   name: string;
+  imageURL: string;
   gender: 'male' | 'female' | 'other';
   email: string;
   phone: string;
@@ -22,6 +23,14 @@ const teacherSchema = new Schema<TeacherDocument>({
     required: true,
     minlength: [5, 'Name must be at least 5 characters.'],
     maxlength: [25, 'Name cannot exceed 25 characters.'],
+  },
+  imageURL: {
+    type: String,
+    required: true,
+    validate: [
+      (value: string) => /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/.test(value),
+      'imageUrl must be a valid url',
+    ],
   },
   email: {
     type: String,
