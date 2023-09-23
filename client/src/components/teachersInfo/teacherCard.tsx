@@ -34,7 +34,7 @@ const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
           <>
             <div className="relative w-32 h-32 rounded-full overflow-hidden">
               <Image
-                src="https://img.freepik.com/free-photo/elegant-businessman-office_155003-9641.jpg?size=626&ext=jpg&uid=R79200208&ga=GA1.2.2093189715.1681108557&semt=sph" // TODO: Replace with the teacher's image URL
+                src={teacher.imageURL} // TODO: Replace with the teacher's image URL
                 alt={teacher.fullName}
                 layout="fill"
               />

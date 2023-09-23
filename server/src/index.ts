@@ -9,6 +9,7 @@ import noticeRoute from './routes/noticeRoutes';
 import studentRoutes from './routes/studentRoutes';
 import teacherRoutes from './routes/teacherRoutes';
 import videoRoutes from './routes/videoRoutes';
+import clubRoutes from './routes/clubRoutes';
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use('/api/students', studentRoutes);
 app.use('/api/teachers', teacherRoutes);
 app.use('/api/images', imageRoutes);
 app.use('/api/videos', videoRoutes);
+app.use('/api/club', clubRoutes);
 
 mongoose
   .connect(process.env.DB_URI || '')
