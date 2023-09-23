@@ -88,7 +88,12 @@ const Teachers = () => {
 
   return (
     <main>
-      <h2 className="text-2xl pb-3 font-bold">Teachers</h2>
+      <div className="flex items-center justify-between pb-3">
+        <h2 className="text-2xl  font-bold">Teachers</h2>
+        <Button asChild>
+          <Link href="/dashboard/teachers/new">Add New Teacher</Link>
+        </Button>
+      </div>
       <DataTable columns={columns} table={table} />
     </main>
   );
