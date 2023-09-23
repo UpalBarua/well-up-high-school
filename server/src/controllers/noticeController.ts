@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { z } from "zod";
 import NoticeModel from "../models/Notice";
+import { isValidObjectId } from "mongoose";
 
 const noticeSchema = z.object({
   title: z.string().min(1).max(255),
@@ -61,6 +62,12 @@ export const getNotices = async (req: Request, res: Response) => {
 //get notice by id
 export const getNoticesById = async (req: Request, res: Response) => {
   try {
+
+
+      if (!isValidObjectId(req.params.id)) {
+        return res.status(400).json({ message: "Invalid ObjectId" });
+      }
+
     const notice = await NoticeModel.findById(req.params.id);
 
     if (!notice) {
@@ -77,6 +84,10 @@ export const getNoticesById = async (req: Request, res: Response) => {
 //update notice
 export const updateNotice = async (req: Request, res: Response) => {
   try {
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: "Invalid ObjectId" });
+    }
+
     const parsedNotice = noticeSchema.safeParse(req.body);
 
     if (!parsedNotice.success) {
@@ -110,6 +121,9 @@ export const updateNotice = async (req: Request, res: Response) => {
 //delete notice
 export const deleteNotice = async (req: Request, res: Response) => {
   try {
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: "Invalid ObjectId" });
+    }
     const deletedNotice = await NoticeModel.findByIdAndDelete(req.params.id);
 
     if (!deletedNotice) {
