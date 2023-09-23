@@ -14,8 +14,8 @@ type DashboardSidebarProps = {
 
 const DashboardSidebar = ({ navOptions, pathname }: DashboardSidebarProps) => {
   return (
-    <aside className="w-60 hidden md:block border-r-2">
-      <div className="fixed h-full w-60 p-4 space-y-4">
+    <aside className="w-60 hidden md:block">
+      <div className="fixed h-full w-60 p-4 space-y-4 border-r-2">
         <Link href="/dashboard" className="flex items-center gap-2">
           <div className="relative h-6 w-6">
             <Image src="/logo.png" alt="logo" fill />

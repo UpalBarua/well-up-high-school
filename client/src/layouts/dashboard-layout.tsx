@@ -54,7 +54,7 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
   const { pathname } = useRouter();
 
   return (
-    <div className="container md:flex gap-5 relative">
+    <div className="container md:flex gap-3.5 relative">
       <header className="md:hidden flex items-center gap-3 py-2 bg-accent-50/80 backdrop-blur-sm sticky top-0">
         <DashboardMobileMenu navOptions={NAV_OPTIONS} pathname={pathname} />
         <Link href="/" className="flex items-center gap-3">
@@ -65,7 +65,7 @@ const DashboardLayout = ({ children }: { children: ReactNode }) => {
         </Link>
       </header>
       <DashboardSidebar navOptions={NAV_OPTIONS} pathname={pathname} />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 py-2.5">{children}</main>
     </div>
   );
 };

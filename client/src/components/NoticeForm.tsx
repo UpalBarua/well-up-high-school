@@ -1,51 +1,51 @@
-import React, { useState } from "react";
-import { FaSpinner } from "react-icons/fa";
-import { Toaster, toast } from "react-hot-toast";
-import { useForm, Controller, useFieldArray } from "react-hook-form";
-import { NoticeFormData, RelatedLink } from "@/types/type";
-import axios from "@/api/axios";
+import React, { useState } from 'react';
+import { FaSpinner } from 'react-icons/fa';
+import { Toaster, toast } from 'react-hot-toast';
+import { useForm, Controller, useFieldArray } from 'react-hook-form';
+import { NoticeFormData, RelatedLink } from '@/types/types';
+import axios from '@/api/axios';
 function CreateNoticeForm() {
-  const initialRelatedLink: RelatedLink = { title: "", url: "" };
+  const initialRelatedLink: RelatedLink = { title: '', url: '' };
 
   const { handleSubmit, control, getValues, setValue, watch } =
     useForm<NoticeFormData>({
       defaultValues: {
-        title: "",
-        description: "",
-        pdfLink: "",
-        postedDate: "",
-        expiryDate: "",
-        author: "",
-        tags: "",
-        status: "Draft",
+        title: '',
+        description: '',
+        pdfLink: '',
+        postedDate: '',
+        expiryDate: '',
+        author: '',
+        tags: '',
+        status: 'Draft',
         relatedLinks: [initialRelatedLink],
       },
     });
 
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "relatedLinks",
+    name: 'relatedLinks',
   });
 
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (data: NoticeFormData) => {
-    const tagsArray = data.tags.split(",").map((tag) => tag.trim());
+    const tagsArray = data.tags.split(',').map((tag) => tag.trim());
     data.tags = tagsArray;
 
     if (data.description.length < 10) {
-      toast.error("Description must be at least 10 characters long");
+      toast.error('Description must be at least 10 characters long');
       return;
     }
     console.log(data.relatedLinks);
     setIsLoading(true);
 
     try {
-      const response = await axios.post("/notices", data);
-      toast.success("Notice created successfully");
+      const response = await axios.post('/notices', data);
+      toast.success('Notice created successfully');
     } catch (error) {
-      toast.error("Failed to create notice");
-      console.error("Error creating notice:", error);
+      toast.error('Failed to create notice');
+      console.error('Error creating notice:', error);
     } finally {
       setIsLoading(false);
     }
@@ -80,8 +80,7 @@ function CreateNoticeForm() {
           render={({ field }) => (
             <textarea
               {...field}
-              className="w-full p-2 border rounded-md"
-            ></textarea>
+              className="w-full p-2 border rounded-md"></textarea>
           )}
         />
       </div>
@@ -192,8 +191,7 @@ function CreateNoticeForm() {
         <div key={field.id} className="mb-4">
           <label
             htmlFor={`relatedLinks[${index}].title`}
-            className="block text-gray-700 font-bold"
-          >
+            className="block text-gray-700 font-bold">
             Related Link Title:
           </label>
           <Controller
@@ -209,8 +207,7 @@ function CreateNoticeForm() {
           />
           <label
             htmlFor={`relatedLinks[${index}].url`}
-            className="block text-gray-700 font-bold"
-          >
+            className="block text-gray-700 font-bold">
             Related Link URL:
           </label>
           <Controller
@@ -228,8 +225,7 @@ function CreateNoticeForm() {
             <button
               type="button"
               onClick={() => remove(index)}
-              className="mt-2 bg-red-500 text-white px-2 py-1 rounded-md"
-            >
+              className="mt-2 bg-red-500 text-white px-2 py-1 rounded-md">
               Remove Related Link
             </button>
           )}
@@ -239,8 +235,7 @@ function CreateNoticeForm() {
       <button
         type="button"
         onClick={() => append(initialRelatedLink)}
-        className="mb-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-      >
+        className="mb-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
         Add Related Link
       </button>
 
@@ -248,11 +243,10 @@ function CreateNoticeForm() {
         <button
           type="submit"
           className={`px-4 font-semibold py-2 bg-gray-800 text-white rounded-lg mb-4${
-            isLoading ? " disabled" : ""
+            isLoading ? ' disabled' : ''
           }`}
-          disabled={isLoading}
-        >
-          {isLoading ? <FaSpinner className="animate-spin" /> : "Create Notice"}
+          disabled={isLoading}>
+          {isLoading ? <FaSpinner className="animate-spin" /> : 'Create Notice'}
         </button>
         <Toaster />
       </div>
