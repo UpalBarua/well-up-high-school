@@ -2,7 +2,7 @@ import axios from "@/api/axios";
 import DataTable from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import DashboardLayout from "@/layouts/dashboard-layout";
-import type { Teacher } from "@/types/types";
+import type { StudentData } from "@/types/types";
 import { useQuery } from "@tanstack/react-query";
 import {
   ColumnFiltersState,
@@ -12,51 +12,43 @@ import {
   useReactTable,
   type ColumnDef,
 } from "@tanstack/react-table";
-import Image from "next/image";
 import Link from "next/link";
 import { ReactElement, useState } from "react";
 
-const Teachers = () => {
-  const { data: teachers = [] as Teacher[] } = useQuery<Teacher[]>({
-    queryKey: ["teachers"],
+const Students = () => {
+  const { data: students = [] as StudentData[] } = useQuery<StudentData[]>({
+    queryKey: ["students"],
     queryFn: async () => {
-      const { data } = await axios.get("/teachers");
+      const { data } = await axios.get("/students");
       return data.data;
     },
   });
 
-  const columns: ColumnDef<Teacher>[] = [
+  const columns: ColumnDef<StudentData>[] = [
     {
-      accessorKey: "imageURL",
-      header: "Picture",
-      cell: ({ row }) => (
-        <div className="relative aspect-square w-10 rounded-full">
-          <Image
-            className="rounded-full object-center object-cover"
-            src={row.original.imageURL}
-            alt={row.original.name}
-            fill
-          />
-        </div>
-      ),
-    },
-    {
-      accessorKey: "name",
+      accessorKey: "firstName",
       header: "Name",
     },
     {
-      accessorKey: "role",
-      header: "Role",
+      accessorKey: "studentId",
+      header: "studentId",
     },
     {
-      accessorKey: "Subjects",
-      header: "subjects",
-      cell: ({ row }) => <span>{row.original.subjects?.join(", ")}</span>,
-    },
-    {
-      accessorKey: "classes",
-      header: "Classes",
-      cell: ({ row }) => <span>{row.original.classes.join(", ")}</span>,
+      accessorKey: "classInfo",
+      header: "classInfo",
+      cell: ({ row }) => (
+        <>
+          <span className="block">
+            Class: {row?.original.classInfo.class}, Session:
+            {row?.original.classInfo.session}
+            <br></br>
+          </span>
+          <span>
+            Section: {row?.original.classInfo.section}, Group:{" "}
+            {row?.original.classInfo.group}
+          </span>
+        </>
+      ),
     },
     {
       accessorKey: "phone",
@@ -66,7 +58,7 @@ const Teachers = () => {
       header: "Actions",
       cell: ({ row }) => (
         <Button size="sm" variant="secondary" asChild>
-          <Link href={`/dashboard/teachers/${row.original._id}`}>Details</Link>
+          <Link href={`/dashboard/students/${row.original._id}`}>Details</Link>
         </Button>
       ),
     },
@@ -75,7 +67,7 @@ const Teachers = () => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
-    data: teachers,
+    data: students,
     columns,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
@@ -89,9 +81,9 @@ const Teachers = () => {
   return (
     <main>
       <div className="flex items-center justify-between pb-3">
-        <h2 className="text-2xl  font-bold">Teachers</h2>
+        <h2 className="text-2xl  font-bold">Students</h2>
         <Button asChild>
-          <Link href="/dashboard/teachers/new">Add New Teacher</Link>
+          <Link href="/dashboard/students/new">Add New Student</Link>
         </Button>
       </div>
       <DataTable columns={columns} table={table} />
@@ -99,8 +91,8 @@ const Teachers = () => {
   );
 };
 
-Teachers.getLayout = (page: ReactElement) => {
+Students.getLayout = (page: ReactElement) => {
   return <DashboardLayout>{page}</DashboardLayout>;
 };
 
-export default Teachers;
+export default Students;

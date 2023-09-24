@@ -19,7 +19,7 @@ export type Teacher = {
   _id: string;
   name: string;
   imageURL: string;
-  gender: 'male' | 'female' | 'other';
+  gender: "male" | "female" | "other";
   email: string;
   phone: string;
   subjects: string[];
@@ -31,4 +31,25 @@ export type Teacher = {
     university: string;
     year: string;
   }[];
+};
+
+export type StudentData = {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  studentId: number;
+  bloodGroup: string;
+  email: string;
+  birthdate: string;
+  gender: string;
+  address: string;
+  phone: string;
+  classInfo: {
+    session: any;
+    group: string;
+    class: string;
+    section: string;
+  };
+  registrationDate: string;
+  status: string;
 };
