@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
-import { z } from "zod";
-import NoticeModel from "../models/Notice";
-import { isValidObjectId } from "mongoose";
+import { Request, Response } from 'express';
+import { z } from 'zod';
+import NoticeModel from '../models/Notice';
+import { isValidObjectId } from 'mongoose';
 
 const noticeSchema = z.object({
   title: z.string().min(1).max(255),
@@ -11,7 +11,7 @@ const noticeSchema = z.object({
   expiryDate: z.string(),
   author: z.string(),
   tags: z.array(z.string()),
-  status: z.enum(["Draft", "Published", "Archived"]),
+  status: z.enum(['Draft', 'Published', 'Archived']),
   relatedLinks: z.array(
     z.object({
       title: z.string(),
@@ -20,119 +20,172 @@ const noticeSchema = z.object({
   ),
 });
 
-//post notice
 export const createNotice = async (req: Request, res: Response) => {
   try {
-    const parsedNotice = noticeSchema.safeParse(req.body);
+    const { body } = req;
 
-    if (!parsedNotice.success) {
+    const validationResults = noticeSchema.safeParse(body);
+
+    if (!validationResults.success) {
       return res.status(400).json({
-        message: "Invalid notice data",
-        errors: {
-          formErrors: [],
-          fieldErrors: parsedNotice.error.flatten(),
-        },
+        success: false,
+        message: 'Invalid notice data',
+        error: validationResults.error,
       });
     }
 
-    const postedDate = new Date(parsedNotice.data.postedDate);
-    const expiryDate = new Date(parsedNotice.data.expiryDate);
+    const parsedNotice = validationResults.data;
+    const postedDate = new Date(parsedNotice.postedDate);
+    const expiryDate = new Date(parsedNotice.expiryDate);
 
-    const noticeData = { ...parsedNotice.data, postedDate, expiryDate };
+    const noticeData = { ...parsedNotice, postedDate, expiryDate };
 
     const savedNotice = await NoticeModel.create(noticeData);
-    res.status(201).json(savedNotice);
+
+    if (savedNotice) {
+      return res.status(201).json({
+        success: true,
+        message: 'Successfully created new notice',
+        data: savedNotice,
+      });
+    }
+
+    res.status(400).json({
+      success: false,
+      message: 'Failed to create new notice',
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server Error" });
+    res.status(500).json({
+      success: false,
+      message: 'Server Error',
+    });
   }
 };
 
-//get notices
 export const getNotices = async (req: Request, res: Response) => {
   try {
     const notices = await NoticeModel.find().sort({ postedDate: -1 });
-    res.status(200).json(notices);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server Error" });
-  }
-};
 
-//get notice by id
-export const getNoticesById = async (req: Request, res: Response) => {
-  try {
-
-
-      if (!isValidObjectId(req.params.id)) {
-        return res.status(400).json({ message: "Invalid ObjectId" });
-      }
-
-    const notice = await NoticeModel.findById(req.params.id);
-
-    if (!notice) {
-      return res.status(404).json({ message: "Notice not found" });
+    if (notices.length > 0) {
+      return res.status(200).json({
+        success: true,
+        message: 'Notices retrieved successfully',
+        data: notices,
+      });
     }
 
-    res.status(200).json(notice);
+    res.status(404).json({
+      success: false,
+      message: 'No notices found',
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server Error" });
+    res.status(500).json({
+      success: false,
+      message: 'Server Error',
+    });
   }
 };
 
-//update notice
+export const getNoticesById = async (req: Request, res: Response) => {
+  try {
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid ObjectId' });
+    }
+
+    const foundNotice = await NoticeModel.findById(req.params.id);
+
+    if (foundNotice) {
+      return res.status(200).json({
+        success: true,
+        message: 'Notice retrieved successfully',
+        data: foundNotice,
+      });
+    }
+
+    res.status(404).json({
+      success: false,
+      message: 'Specified notice not found',
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Server Error',
+    });
+  }
+};
+
 export const updateNotice = async (req: Request, res: Response) => {
   try {
     if (!isValidObjectId(req.params.id)) {
-      return res.status(400).json({ message: "Invalid ObjectId" });
+      return res.status(400).json({ message: 'Invalid ObjectId' });
     }
 
-    const parsedNotice = noticeSchema.safeParse(req.body);
+    const validationResults = noticeSchema.safeParse(req.body);
 
-    if (!parsedNotice.success) {
-      return res
-        .status(400)
-        .json({ message: "Invalid notice data", errors: parsedNotice.error });
+    if (!validationResults.success) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid notice data',
+        error: validationResults.error,
+      });
     }
 
-    const postedDate = new Date(parsedNotice.data.postedDate);
-    const expiryDate = new Date(parsedNotice.data.expiryDate);
+    const parsedNotice = validationResults.data;
+    const postedDate = new Date(parsedNotice.postedDate);
+    const expiryDate = new Date(parsedNotice.expiryDate);
 
-    const noticeData = { ...parsedNotice.data, postedDate, expiryDate };
+    const noticeData = { ...parsedNotice, postedDate, expiryDate };
 
     const updatedNotice = await NoticeModel.findByIdAndUpdate(
       req.params.id,
       noticeData,
-      { new: true }
+      {
+        new: true,
+      }
     );
 
-    if (!updatedNotice) {
-      return res.status(404).json({ message: "Notice not found" });
+    if (updatedNotice) {
+      return res.status(200).json({
+        success: true,
+        message: 'Notice updated successfully',
+        data: updatedNotice,
+      });
     }
 
-    res.status(200).json(updatedNotice);
+    res.status(404).json({
+      success: false,
+      message: 'Notice not found',
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server Error" });
+    res.status(500).json({
+      success: false,
+      message: 'Server Error',
+    });
   }
 };
 
-//delete notice
 export const deleteNotice = async (req: Request, res: Response) => {
   try {
     if (!isValidObjectId(req.params.id)) {
-      return res.status(400).json({ message: "Invalid ObjectId" });
+      return res.status(400).json({ message: 'Invalid ObjectId' });
     }
     const deletedNotice = await NoticeModel.findByIdAndDelete(req.params.id);
 
-    if (!deletedNotice) {
-      return res.status(404).json({ message: "Notice not found" });
+    if (deletedNotice) {
+      return res.status(200).json({
+        success: true,
+        message: 'Notice deleted successfully',
+      });
     }
 
-    res.status(204).send();
+    res.status(404).json({
+      success: false,
+      message: 'Notice not found',
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server Error" });
+    res.status(500).json({
+      success: false,
+      message: 'Server Error',
+    });
   }
 };
