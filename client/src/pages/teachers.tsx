@@ -10,7 +10,7 @@ const TeachersList: React.FC = () => {
     axios
       .get('/teachers')
       .then((response) => {
-        setTeachers(response.data);
+        setTeachers(response.data.data);
         setIsLoading(false);
       })
       .catch((error) => {
@@ -30,7 +30,7 @@ const TeachersList: React.FC = () => {
         <div className="text-center my-4">No teachers found.</div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {teachers.map((teacher) => (
+          {teachers?.map((teacher) => (
             <TeacherCard key={teacher._id} teacher={teacher} />
           ))}
         </div>

@@ -9,6 +9,7 @@ type TeacherCardProps = {
 };
 
 const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
+  console.log(teacher);
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -34,12 +35,12 @@ const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
             <div className="relative w-32 h-32 rounded-full overflow-hidden">
               <Image
                 src="https://img.freepik.com/free-photo/elegant-businessman-office_155003-9641.jpg?size=626&ext=jpg&uid=R79200208&ga=GA1.2.2093189715.1681108557&semt=sph" // TODO: Replace with the teacher's image URL
-                alt={teacher.fullName}
+                alt={teacher.name}
                 layout="fill"
               />
             </div>
             <h2 className="text-2xl font-semibold text-primary">
-              {teacher.fullName}
+              {teacher.name}
             </h2>
             <p className="text-gray-600">{teacher.specializedRole}</p>
           </>
@@ -69,9 +70,9 @@ const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
                 Subjects Taught:
               </h3>
               <ul className="list-disc pl-6">
-                {teacher.subjects.map((subject) => (
+                {teacher.subjects?.map((subject) => (
                   <li key={subject._id} className="text-gray-600">
-                    {subject.className}
+                    {subject}
                   </li>
                 ))}
               </ul>
@@ -81,9 +82,9 @@ const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
                 Classes Taught:
               </h3>
               <ul className="list-disc pl-6">
-                {teacher.classesTaught.map((classTaught) => (
+                {teacher.classes?.map((classTaught) => (
                   <li key={classTaught._id} className="text-gray-600">
-                    {classTaught.className}
+                    {classTaught}
                   </li>
                 ))}
               </ul>

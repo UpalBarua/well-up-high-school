@@ -124,18 +124,26 @@ export const createTeacher = async (req: Request, res: Response) => {
 // delete teacher;
 export const deleteTeacher = async (req: Request, res: Response) => {
   try {
-    const deletedTeacher = await Teacher.findByIdAndDelete(req.params.id);
+    const { id } = req.params;
+
+    if (!isValidObjectId(id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid teacher id',
+      });
+    }
+
+    const deletedTeacher = await Teacher.findByIdAndDelete(id);
+
     if (deletedTeacher) {
       return res.status(200).json({ message: 'Teacher deleted successfully' });
     }
-    res.status(404).json({ error: 'Teacher was not Deleted ' });
+
+    res.status(404).json({ message: 'Teacher not found' });
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: 'There Was an error on Delete Teacher', err });
+    res.status(500).json({ message: 'Server Error', error: err });
   }
 };
-
 //Update A Teacher Information
 export const updateTeacher = async (req: Request, res: Response) => {
   const {
@@ -150,6 +158,12 @@ export const updateTeacher = async (req: Request, res: Response) => {
   } = req.body;
 
   try {
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid teacher id',
+      });
+    }
     const updatedTeacher = await Teacher.findByIdAndUpdate(
       { _id: req.params.id },
       {
