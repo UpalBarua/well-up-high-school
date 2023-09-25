@@ -1,20 +1,20 @@
 import axios from '@/api/axios';
 import DataTable from '@/components/data-table';
+import { Button } from '@/components/ui/button';
 import DashboardLayout from '@/layouts/dashboard-layout';
 import type { Teacher } from '@/types/types';
 import { useQuery } from '@tanstack/react-query';
 import {
+  ColumnFiltersState,
   getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
   useReactTable,
   type ColumnDef,
-  getPaginationRowModel,
-  ColumnFiltersState,
-  getFilteredRowModel,
 } from '@tanstack/react-table';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ReactElement, useState } from 'react';
-import { Button } from '@/components/ui/button';
 
 const Teachers = () => {
   const { data: teachers = [] as Teacher[] } = useQuery<Teacher[]>({
