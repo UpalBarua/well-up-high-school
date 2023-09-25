@@ -1,9 +1,9 @@
-import axios from "@/api/axios";
-import DataTable from "@/components/data-table";
-import { Button } from "@/components/ui/button";
-import DashboardLayout from "@/layouts/dashboard-layout";
-import type { Teacher } from "@/types/types";
-import { useQuery } from "@tanstack/react-query";
+import axios from '@/api/axios';
+import DataTable from '@/components/data-table';
+import { Button } from '@/components/ui/button';
+import DashboardLayout from '@/layouts/dashboard-layout';
+import type { Teacher } from '@/types/types';
+import { useQuery } from '@tanstack/react-query';
 import {
   ColumnFiltersState,
   getCoreRowModel,
@@ -11,24 +11,24 @@ import {
   getPaginationRowModel,
   useReactTable,
   type ColumnDef,
-} from "@tanstack/react-table";
-import Image from "next/image";
-import Link from "next/link";
-import { ReactElement, useState } from "react";
+} from '@tanstack/react-table';
+import Image from 'next/image';
+import Link from 'next/link';
+import { ReactElement, useState } from 'react';
 
 const Teachers = () => {
   const { data: teachers = [] as Teacher[] } = useQuery<Teacher[]>({
-    queryKey: ["teachers"],
+    queryKey: ['teachers'],
     queryFn: async () => {
-      const { data } = await axios.get("/teachers");
+      const { data } = await axios.get('/teachers');
       return data.data;
     },
   });
 
   const columns: ColumnDef<Teacher>[] = [
     {
-      accessorKey: "imageURL",
-      header: "Picture",
+      accessorKey: 'imageURL',
+      header: 'Picture',
       cell: ({ row }) => (
         <div className="relative aspect-square w-10 rounded-full">
           <Image
@@ -41,29 +41,29 @@ const Teachers = () => {
       ),
     },
     {
-      accessorKey: "name",
-      header: "Name",
+      accessorKey: 'name',
+      header: 'Name',
     },
     {
-      accessorKey: "role",
-      header: "Role",
+      accessorKey: 'role',
+      header: 'Role',
     },
     {
-      accessorKey: "Subjects",
-      header: "subjects",
-      cell: ({ row }) => <span>{row.original.subjects?.join(", ")}</span>,
+      accessorKey: 'Subjects',
+      header: 'subjects',
+      cell: ({ row }) => <span>{row.original.subjects?.join(', ')}</span>,
     },
     {
-      accessorKey: "classes",
-      header: "Classes",
-      cell: ({ row }) => <span>{row.original.classes.join(", ")}</span>,
+      accessorKey: 'classes',
+      header: 'Classes',
+      cell: ({ row }) => <span>{row.original.classes.join(', ')}</span>,
     },
     {
-      accessorKey: "phone",
-      header: "Phone",
+      accessorKey: 'phone',
+      header: 'Phone',
     },
     {
-      header: "Actions",
+      header: 'Actions',
       cell: ({ row }) => (
         <Button size="sm" variant="secondary" asChild>
           <Link href={`/dashboard/teachers/${row.original._id}`}>Details</Link>
