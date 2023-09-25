@@ -44,6 +44,9 @@ const Navbar = () => {
                 <Link href="teachers">Teachers</Link>
               </MenubarItem>
               <MenubarItem>Management</MenubarItem>
+               <MenubarItem>
+                <Link href="students">Students</Link>
+              </MenubarItem>
             </MenubarContent>
           </MenubarMenu>
 

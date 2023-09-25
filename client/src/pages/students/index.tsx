@@ -1,3 +1,4 @@
+import React from 'react';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -10,16 +11,16 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-const StudentDetails = () => {
-  const handleSubmit = (event) => {
+const Students = () => {
+    const handleSubmit = (event) => {
     event.preventDefault();
 
     const name = event.target.name.value;
     const studentId = event.target.studentId.value;
     console.log(name, studentId);
   };
-  return (
-    <div className="flex justify-center">
+    return (
+      <section className="flex justify-center mt-6 lg:mt-14">
       <div className="max-w-lg p-4 shadow-md dark:bg-gray-900 dark:text-gray-100">
         <div className="flex justify-between pb-4 border-bottom">
           <div>
@@ -114,13 +115,12 @@ const StudentDetails = () => {
         </form>
 
         <p className="leadi dark:text-gray-400 pt-8">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellat,
-          excepturi. Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-          Repellat, excepturi.
+          Here are student form .In this form you will find the student details easily.Whenever you need a information of a any student you can find it easily with student id and student name.Thank you.
+         
         </p>
       </div>
-    </div>
-  );
+    </section>
+    );
 };
 
-export default StudentDetails;
+export default Students;
