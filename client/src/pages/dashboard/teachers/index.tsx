@@ -51,7 +51,7 @@ const Teachers = () => {
     {
       accessorKey: 'Subjects',
       header: 'subjects',
-      cell: ({ row }) => <span>{row.original.subjects.join(', ')}</span>,
+      cell: ({ row }) => <span>{row.original.subjects?.join(', ')}</span>,
     },
     {
       accessorKey: 'classes',
