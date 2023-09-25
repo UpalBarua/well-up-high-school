@@ -1,6 +1,7 @@
 import CounterSection from "@/components/CounterSection";
 import ContactUs from "@/components/contactUs";
 import Event from "@/components/event";
+import FAQ from "@/components/home/accordion";
 import HomeCarousel from "@/components/home/carousel";
 import PrincipleTalk from "@/components/home/principles-talk";
 import { useAuth } from "@/contexts/auth-context";
@@ -16,6 +17,7 @@ const Home = () => {
       <PrincipleTalk />
       <CounterSection />
       <Event />
+      <FAQ />
       <ContactUs />
     </div>
   );

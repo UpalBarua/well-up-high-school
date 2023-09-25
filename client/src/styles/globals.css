@@ -28,3 +28,6 @@ body {
   z-index: 1;
   mix-blend-mode: multiply;
 }
+.important {
+  margin: 0 !important;
+}

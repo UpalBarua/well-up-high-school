@@ -26,7 +26,7 @@ const PrincipleTalk: React.FC = () => {
                 />
               </div>
             </div>
-            <div className="w-full md:w-2/3 p-8 py-0">
+            <div className="w-full md:w-2/3 p-8 py-0 important">
               <h2 className="capitalize text-4xl font-bold mb-1">
                 Alexander robert
               </h2>

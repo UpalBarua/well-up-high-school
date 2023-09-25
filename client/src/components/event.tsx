@@ -43,7 +43,6 @@ const Event = () => {
   ];
 
   useEffect(() => {
-    // Initialize AOS when the component mounts
     import("aos").then((aos) => {
       aos.init({
         duration: 800,
@@ -53,34 +52,42 @@ const Event = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 my-10">
-      {allEvent?.map((all, index) => (
-        <section
-          key={all.id}
-          data-aos="fade-up" // Specify the animation type
-          data-aos-delay={`${index * 100}`} // Delay each animation
-        >
-          <div className="flex justify-center flex-col lg:flex-row gap-4">
-            <div className=" w-full lg:w-1/2">
-              <Image
-                src={all?.image}
-                alt=""
-                height={500}
-                width={300}
-                className="w-full"
-              />
-            </div>
-            <div className="w-full lg:w-1/2">
-              <h1 className="text-[1.3rem] font-bold"> {all?.event_heading}</h1>
-              <p>{all?.event_details}</p>
-              <div className="flex gap-4 items-center mt-2 font-semibold">
-                <BsCalendar2Date />
-                <p>{all?.date}</p>
+    <div className="my-10">
+      {/*       <h2 className="my-5 text-2xl font-bold text-red-500">
+        Our latest events
+      </h2> */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+        {allEvent?.map((all, index) => (
+          <section
+            key={all.id}
+            data-aos="fade-up"
+            data-aos-delay={`${index * 100}`}
+          >
+            <div className="flex justify-center flex-col lg:flex-row gap-4">
+              <div className=" w-full lg:w-1/2">
+                <Image
+                  src={all?.image}
+                  alt=""
+                  height={500}
+                  width={300}
+                  className="w-full"
+                />
+              </div>
+              <div className="w-full lg:w-1/2">
+                <h1 className="text-[1.3rem] font-bold">
+                  {" "}
+                  {all?.event_heading}
+                </h1>
+                <p>{all?.event_details}</p>
+                <div className="flex gap-4 items-center mt-2 font-semibold">
+                  <BsCalendar2Date />
+                  <p>{all?.date}</p>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-      ))}
+          </section>
+        ))}
+      </div>
     </div>
   );
 };

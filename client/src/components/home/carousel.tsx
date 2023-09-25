@@ -28,11 +28,6 @@ const HomeCarousel: React.FC = () => {
     },
   ];
 
-  useEffect(() => {
-    // Log messages for debugging
-    console.log("Component mounted");
-  }, []);
-
   return (
     <div className="carousel-container cursor-pointer">
       <Swiper
