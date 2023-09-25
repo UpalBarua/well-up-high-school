@@ -1,7 +1,13 @@
-// TeacherCard.tsx
 import { Teacher } from '@/types/types';
 import React, { useState, useEffect } from 'react';
-import { FaEnvelope, FaPhone, FaUser, FaGraduationCap } from 'react-icons/fa';
+import {
+  FaEnvelope,
+  FaPhone,
+  FaUser,
+  FaGraduationCap,
+  FaChalkboardTeacher,
+  FaBriefcase,
+} from 'react-icons/fa';
 import Image from 'next/image';
 
 type TeacherCardProps = {
@@ -10,6 +16,7 @@ type TeacherCardProps = {
 
 const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       setIsLoading(false);
@@ -18,30 +25,27 @@ const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
   }, []);
 
   return (
-    <div
-      className="shadow-md rounded-md p-4 hover:shadow-lg transition duration-100 ease-in-out transform hover:scale-105 border-gray-800"
-      style={{ minHeight: '400px' }}>
+    <div className="shadow-md rounded-md p-4 hover:shadow-lg transition duration-100 ease-in-out transform hover:scale-105 border border-gray-300">
       <div className="flex flex-col items-center space-y-4">
         {isLoading ? (
           <div className="animate-pulse">
-            <div className="w-32 h-32 rounded-full bg-gray-300 mb-10"></div>
-            <div className="w-32 h-6 bg-gray-300 "></div>
-            <div className="w-40 h-4 bg-gray-300 mt-5"></div>
-            <div className="mb-3 w-60 h-5 bg-gray-300 mt-5"></div>
+            <div className="w-32 h-32 rounded-full bg-gray-300 mb-3"></div>
+            <div className="w-40 h-4 bg-gray-300 mb-2"></div>
+            <div className="w-32 h-4 bg-gray-300 mb-2"></div>
           </div>
         ) : (
           <>
             <div className="relative w-32 h-32 rounded-full overflow-hidden">
               <Image
-                src="https://img.freepik.com/free-photo/elegant-businessman-office_155003-9641.jpg?size=626&ext=jpg&uid=R79200208&ga=GA1.2.2093189715.1681108557&semt=sph" // TODO: Replace with the teacher's image URL
-                alt={teacher.fullName}
+                src={teacher.imageURL}
+                alt={teacher.name}
                 layout="fill"
               />
             </div>
             <h2 className="text-2xl font-semibold text-primary">
-              {teacher.fullName}
+              {teacher.name}
             </h2>
-            <p className="text-gray-600">{teacher.specializedRole}</p>
+            <p className="text-gray-600">{teacher.role}</p>
           </>
         )}
       </div>
@@ -61,6 +65,16 @@ const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
               <FaUser className="text-primary mr-2" />
               <p className="text-gray-600">Gender: {teacher.gender}</p>
             </div>
+            <div className="flex items-center mb-2">
+              <FaChalkboardTeacher className="text-primary mr-2" />
+              <p className="text-gray-600">
+                Experience: {teacher.experience} years
+              </p>
+            </div>
+            <div className="flex items-center mb-2">
+              <FaBriefcase className="text-primary mr-2" />
+              <p className="text-gray-600">Role: {teacher.role}</p>
+            </div>
           </div>
 
           <div className="mt-4 flex gap-4">
@@ -69,9 +83,9 @@ const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
                 Subjects Taught:
               </h3>
               <ul className="list-disc pl-6">
-                {teacher.subjects.map((subject) => (
-                  <li key={subject._id} className="text-gray-600">
-                    {subject.className}
+                {teacher.subjects.map((subject, index) => (
+                  <li key={index} className="text-gray-600">
+                    {subject}
                   </li>
                 ))}
               </ul>
@@ -81,9 +95,9 @@ const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
                 Classes Taught:
               </h3>
               <ul className="list-disc pl-6">
-                {teacher.classesTaught.map((classTaught) => (
-                  <li key={classTaught._id} className="text-gray-600">
-                    {classTaught.className}
+                {teacher.classes.map((classTaught, index) => (
+                  <li key={index} className="text-gray-600">
+                    {classTaught}
                   </li>
                 ))}
               </ul>
@@ -96,8 +110,8 @@ const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
               Degrees:
             </h3>
             <ul className="list-disc pl-6">
-              {teacher.degrees.map((degree) => (
-                <li key={degree._id} className="text-gray-600">
+              {teacher.degrees.map((degree, index) => (
+                <li key={index} className="text-gray-600">
                   {degree.degreeName} from {degree.university} ({degree.year})
                 </li>
               ))}
