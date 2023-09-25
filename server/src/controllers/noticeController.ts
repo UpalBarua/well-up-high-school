@@ -1,6 +1,7 @@
-import { Request, Response } from "express";
-import { z } from "zod";
-import NoticeModel from "../models/Notice";
+import { Request, Response } from 'express';
+import { z } from 'zod';
+import NoticeModel from '../models/Notice';
+import { isValidObjectId } from 'mongoose';
 
 const noticeSchema = z.object({
   title: z.string().min(1).max(255),
@@ -10,7 +11,7 @@ const noticeSchema = z.object({
   expiryDate: z.string(),
   author: z.string(),
   tags: z.array(z.string()),
-  status: z.enum(["Draft", "Published", "Archived"]),
+  status: z.enum(['Draft', 'Published', 'Archived']),
   relatedLinks: z.array(
     z.object({
       title: z.string(),
@@ -87,9 +88,11 @@ export const getNotices = async (req: Request, res: Response) => {
 
 export const getNoticesById = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid ObjectId' });
+    }
 
-    const foundNotice = await NoticeModel.findById(id);
+    const foundNotice = await NoticeModel.findById(req.params.id);
 
     if (foundNotice) {
       return res.status(200).json({
@@ -113,10 +116,11 @@ export const getNoticesById = async (req: Request, res: Response) => {
 
 export const updateNotice = async (req: Request, res: Response) => {
   try {
-    const { body } = req;
-    const { id } = req.params;
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid ObjectId' });
+    }
 
-    const validationResults = noticeSchema.safeParse(body);
+    const validationResults = noticeSchema.safeParse(req.body);
 
     if (!validationResults.success) {
       return res.status(400).json({
@@ -133,9 +137,11 @@ export const updateNotice = async (req: Request, res: Response) => {
     const noticeData = { ...parsedNotice, postedDate, expiryDate };
 
     const updatedNotice = await NoticeModel.findByIdAndUpdate(
-      id,
+      req.params.id,
       noticeData,
-      { new: true }
+      {
+        new: true,
+      }
     );
 
     if (updatedNotice) {
@@ -160,9 +166,10 @@ export const updateNotice = async (req: Request, res: Response) => {
 
 export const deleteNotice = async (req: Request, res: Response) => {
   try {
-    const { id } = req.params;
-
-    const deletedNotice = await NoticeModel.findByIdAndDelete(id);
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: 'Invalid ObjectId' });
+    }
+    const deletedNotice = await NoticeModel.findByIdAndDelete(req.params.id);
 
     if (deletedNotice) {
       return res.status(200).json({

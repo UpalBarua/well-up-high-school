@@ -15,6 +15,7 @@ type TeacherCardProps = {
 };
 
 const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
+  console.log(teacher);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -85,7 +86,6 @@ const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
               <ul className="list-disc pl-6">
                 {teacher.subjects.map((subject, index) => (
                   <li key={index} className="text-gray-600">
-                    {subject}
                   </li>
                 ))}
               </ul>

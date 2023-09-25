@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import Student from "../models/Student";
+import { isValidObjectId } from "mongoose";
 // create a new student document
 export const createStudent = async (req: Request, res: Response) => {
   try {
@@ -36,6 +37,9 @@ export const getAllstudents = async (req: Request, res: Response) => {
 
 export const getStudentById = async (req: Request, res: Response) => {
   try {
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: "Invalid student ID" });
+    }
     const student = await Student.findById(req.params.id);
     if (student) {
       return res.status(200).json({
@@ -58,6 +62,9 @@ export const getStudentById = async (req: Request, res: Response) => {
 
 export const deleteStudenyByID = async (req: Request, res: Response) => {
   try {
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: "Invalid student ID" });
+    }
     const student = await Student.findByIdAndDelete(req.params.id);
     if (student) {
       return res.status(200).json({
@@ -91,6 +98,9 @@ export const updateStudentById = async (req: Request, res: Response) => {
     classInfo,
   } = req.body;
   try {
+    if (!isValidObjectId(req.params.id)) {
+      return res.status(400).json({ message: "Invalid student ID" });
+    }
     const student = await Student.findByIdAndUpdate(
       { _id: req.params.id },
       {
