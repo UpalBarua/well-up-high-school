@@ -27,9 +27,9 @@ const CounterSection = () => {
         bgImage="https://i.ibb.co/hKZk9Bm/kenny-eliason-z-FSo6bn-ZJTw-unsplash.jpg"
         strength={400}
       >
-        <div className="relative bg-opacity-70 bg-gray-900 py-[5%] md:py-[8.5%] text-white text">
+        <div className="relative bg-opacity-70 bg-gray-900 py-[5%] md:py-[8.5%] text-white">
           <div className="absolute inset-0" />
-          <div className="container text-center ">
+          <div className="container text-center h-full w-full flex flex-col justify-center align-center">
             <animated.i
               className="text-2xl md:text-5xl  font-semibold"
               style={animationProps}

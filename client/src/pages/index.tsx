@@ -1,30 +1,22 @@
-import PhotoGellery from '@/components/Gellery/PhotoGellery/PhotoGellery';
-import VideoGallery from '@/components/Gellery/VideoGellery/VideoGallery;';
-import CreateNoticeForm from '@/components/NoticeForm';
-import TeacherForm from '@/components/TeacherForm/TeacherForm';
-import VideoUpload from '@/components/VideoUpload';
-import ContactUs from '@/components/contactUs';
-import ImageUploader from '@/components/imageUploader';
-import StudentDetails from '@/components/studentDetails/StudentDetails';
-import { Button } from '@/components/ui/button';
-import { useAuth } from '@/contexts/auth-context';
+import CounterSection from "@/components/CounterSection";
+import ContactUs from "@/components/contactUs";
+import Event from "@/components/event";
+import HomeCarousel from "@/components/home/carousel";
+import PrincipleTalk from "@/components/home/principles-talk";
+import { useAuth } from "@/contexts/auth-context";
+
+import { useEffect } from "react";
 
 const Home = () => {
   const auth = useAuth();
+
   return (
     <div>
-      {/* <h1>Hello well up high school!</h1>
-      <Button>Click Me!</Button> */}
-      {/* <CreateNoticeForm></CreateNoticeForm>
-      <TeacherForm></TeacherForm>
-      <ContactUs></ContactUs>
-      <br />
-      <ImageUploader />
-      <CounterSection></CounterSection>
-      <VideoUpload />
-      <PhotoGellery></PhotoGellery>
-      <VideoGallery></VideoGallery> */}
-      <StudentDetails></StudentDetails>
+      <HomeCarousel />
+      <PrincipleTalk />
+      <CounterSection />
+      <Event />
+      <ContactUs />
     </div>
   );
 };

@@ -1,8 +1,8 @@
 // TeacherCard.tsx
-import { Teacher } from '@/types/types';
-import React, { useState, useEffect } from 'react';
-import { FaEnvelope, FaPhone, FaUser, FaGraduationCap } from 'react-icons/fa';
-import Image from 'next/image';
+import { Teacher } from "@/types/types";
+import React, { useState, useEffect } from "react";
+import { FaEnvelope, FaPhone, FaUser, FaGraduationCap } from "react-icons/fa";
+import Image from "next/image";
 
 type TeacherCardProps = {
   teacher: Teacher;
@@ -20,7 +20,8 @@ const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
   return (
     <div
       className="shadow-md rounded-md p-4 hover:shadow-lg transition duration-100 ease-in-out transform hover:scale-105 border-gray-800"
-      style={{ minHeight: '400px' }}>
+      style={{ minHeight: "400px" }}
+    >
       <div className="flex flex-col items-center space-y-4">
         {isLoading ? (
           <div className="animate-pulse">

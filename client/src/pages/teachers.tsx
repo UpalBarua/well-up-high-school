@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import axios from '@/api/axios';
-import TeacherCard from '../components/teachersInfo/teacherCard';
-import { Teacher } from '@/types/types';
+import React, { useEffect, useState } from "react";
+import axios from "@/api/axios";
+import TeacherCard from "../components/teachersInfo/teacherCard";
+import { Teacher } from "@/types/types";
 
 const TeachersList: React.FC = () => {
   const [teachers, setTeachers] = useState<Teacher[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   useEffect(() => {
     axios
-      .get('/teachers')
+      .get("/teachers")
       .then((response) => {
         setTeachers(response.data);
         setIsLoading(false);
       })
       .catch((error) => {
-        console.error('Error fetching teachers:', error);
+        console.error("Error fetching teachers:", error);
         setIsLoading(false);
       });
   }, []);
