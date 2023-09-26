@@ -29,8 +29,8 @@ const Navbar = () => {
               <BiChevronDown className="text-2xl" />
             </MenubarTrigger>
             <MenubarContent>
-              <MenubarItem>Photo</MenubarItem>
-              <MenubarItem>Video</MenubarItem>
+              <MenubarItem><Link href="photos">Photos</Link></MenubarItem>
+              <MenubarItem><Link href="videos">Videos</Link></MenubarItem>
             </MenubarContent>
           </MenubarMenu>
 
