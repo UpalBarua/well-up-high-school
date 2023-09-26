@@ -40,7 +40,7 @@ const NoticePage = () => {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["notices"]);
-        addToast("Notice deleted successfully", { type: 'success' }); // Show a success toast
+        addToast("Notice deleted successfully", { type: 'success' });
       },
     }
   );

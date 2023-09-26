@@ -19,6 +19,7 @@ const TeachersList: React.FC = () => {
       });
   }, []);
 
+  console.log(teachers)
   return (
     <div className="min-h-screen my-10">
       <h1 className="text-4xl font-extrabold text-gray-800 mb-6">

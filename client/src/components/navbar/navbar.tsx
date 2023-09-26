@@ -4,11 +4,11 @@ import {
   MenubarItem,
   MenubarMenu,
   MenubarTrigger,
-} from '@/components/ui/menubar';
-import Image from 'next/image';
-import Link from 'next/link';
-import { BiChevronDown } from 'react-icons/bi';
-import MobileMenu from './mobile-menu';
+} from "@/components/ui/menubar";
+import Image from "next/image";
+import Link from "next/link";
+import { BiChevronDown } from "react-icons/bi";
+import MobileMenu from "./mobile-menu";
 
 const Navbar = () => {
   return (
@@ -76,10 +76,18 @@ const Navbar = () => {
               <BiChevronDown className="text-2xl" />
             </MenubarTrigger>
             <MenubarContent>
-              <MenubarItem>Science Club</MenubarItem>
-              <MenubarItem>Sports Club</MenubarItem>
-              <MenubarItem>Cultural Club</MenubarItem>
-              <MenubarItem>Art Club</MenubarItem>
+              <MenubarItem>
+                <Link href="/clubs/science-club">Science Club</Link>
+              </MenubarItem>
+              <MenubarItem>
+                <Link href="/clubs/sport-club">Sports Club</Link>
+              </MenubarItem>
+              <MenubarItem>
+                <Link href="/clubs/cultural-club">Cultural Club</Link>
+              </MenubarItem>
+              <MenubarItem>
+                <Link href="/clubs/art-club">Art Club </Link>
+              </MenubarItem>
             </MenubarContent>
           </MenubarMenu>
         </Menubar>
