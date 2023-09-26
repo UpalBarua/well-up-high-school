@@ -1,21 +1,46 @@
 import axios from '@/api/axios';
 import DashboardLayout from '@/layouts/dashboard-layout';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { ReactElement } from 'react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { Separator } from '@/components/ui/separator';
+import { useRouter } from 'next/router';
 
 const TeacherDetails = () => {
+  const router = useRouter()
+  const id = router.query.teacherId
+
+  const queryClient = useQueryClient();
   const { data: teacherDetails = {} } = useQuery({
     queryKey: ['teacherDetails'],
     queryFn: async () => {
-      const { data } = await axios.get('/teachers/650d02b67d7f001271c12e9f');
+      const { data } = await axios.get(`/teachers/${id}`);
       return data.data;
     },
   });
 
+
+  const deleteTeacher = useMutation(
+    (Id: string) => {
+      return axios.delete(`/teachers/${Id}`);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["teacherDetails"]);
+        alert("Teacher deleted successfully")
+      },
+    }
+  );
+
+
+  const handleDeleteTeacher = (Id: string) => {
+    deleteTeacher.mutate(Id);
+  };
+
+
   const {
+    _id,
     name,
     imageURL,
     role,
@@ -50,7 +75,7 @@ const TeacherDetails = () => {
           </div>
           <div className="flex items-center gap-2">
             <Button size="sm">Edit</Button>
-            <Button size="sm">Remove</Button>
+            <Button size="sm" className="bg-red-400 hover:bg-red-600" onClick={()=>{handleDeleteTeacher(_id)}} >Remove</Button>
           </div>
         </div>
       </div>
@@ -68,15 +93,15 @@ const TeacherDetails = () => {
         </div>
         <div className="space-y-2">
           <div>
-            <h3 className="font-semibold">classes</h3>
+            <h3 className="font-semibold text-xl ">classes</h3>
             <p>{classes?.join(', ')}</p>
           </div>
           <div>
-            <h3 className="font-semibold">Subjects</h3>
+            <h3 className="font-semibold text-xl">Subjects</h3>
             <p>{subjects?.join(', ')}</p>
           </div>
           <div>
-            <h3 className="font-semibold">Experience</h3>
+            <h3 className="font-semibold text-xl">Experience</h3>
             <p>{`${experience} Years`}</p>
           </div>
         </div>
