@@ -1,4 +1,4 @@
-import { Schema, model, type Document } from 'mongoose';
+import { Schema, model, type Document } from "mongoose";
 
 type StudentDocument = Document & {
   firstName: string;
@@ -7,7 +7,7 @@ type StudentDocument = Document & {
   bloodGroup: string;
   email: string;
   birthDate: Date;
-  gender: 'Male' | 'Female' | 'Other';
+  gender: "Male" | "Female" | "Other";
   address: string;
   phone: string;
   classInfo: {
@@ -52,11 +52,10 @@ const studentSchema = new Schema<StudentDocument>(
     },
     birthDate: {
       type: Date,
-      required: true,
     },
     gender: {
       type: String,
-      enum: ['Male', 'Female', 'Other'],
+      enum: ["Male", "Female", "Other"],
       required: true,
     },
     address: {
@@ -93,8 +92,8 @@ const studentSchema = new Schema<StudentDocument>(
     },
     status: {
       type: String,
-      enum: ['Pending', 'Approved', 'Rejected'],
-      default: 'Pending',
+      enum: ["Pending", "Approved", "Rejected"],
+      default: "Pending",
     },
   },
   {
@@ -102,5 +101,5 @@ const studentSchema = new Schema<StudentDocument>(
   }
 );
 
-const Student = model<StudentDocument>('student', studentSchema);
+const Student = model<StudentDocument>("student", studentSchema);
 export default Student;
