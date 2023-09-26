@@ -41,7 +41,9 @@ const MobileMenu = () => {
                 <MenubarItem>
                   <Link href="/teachers">Teachers</Link>
                 </MenubarItem>
-                <MenubarItem>Management</MenubarItem>
+                <MenubarItem>
+                  <Link href="/management">Management</Link>
+                </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
 
