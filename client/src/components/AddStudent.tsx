@@ -31,13 +31,13 @@ const AddStudent: React.FC = () => {
   } = useForm<StudentData>();
 
   const onSubmit: SubmitHandler<StudentData> = (data) => {
-    console.log("info from studnet", data);
+    // console.log("info from studnet", data);
     try {
       axios.post("/students", data).then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         const result = res.data.data;
-        console.log(result);
-        if (res.data.status) {
+        // console.log(result);
+        if (result.status) {
           toast.success(`${result.firstName} Added Successfully`);
         }
       });

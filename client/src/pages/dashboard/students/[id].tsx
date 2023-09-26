@@ -1,15 +1,25 @@
 import axios from "@/api/axios";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import DashboardLayout from "@/layouts/dashboard-layout";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactElement, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const StudentDetails = () => {
   const router = useRouter();
   const { id } = router.query;
-  const [postData, setPostData] = useState();
+  const [studentData, setstudentData] = useState();
   const handleback = () => {
     router.push("/dashboard/students");
   };
@@ -18,13 +28,27 @@ const StudentDetails = () => {
       axios
         .get(`/students/${id}`)
         .then((response) => {
-          setPostData(response.data.data);
+          setstudentData(response.data.data);
         })
         .catch((error) => {
           console.error("Error fetching post:", error);
         });
     }
   }, [id]);
+
+  const handleDelete = async (id: number) => {
+    try {
+      const response = await axios.delete(`/students/${studentData?._id}`);
+      const result = response.data;
+      console.log(result);
+      if (result.status === "success") {
+        toast.success(`${studentData?.firstName} Delete Successfully`);
+      }
+    } catch (error) {
+      console.error(`Error deleting item with ID ${id}: ${error.message}`);
+    }
+  };
+
   return (
     <div className="">
       <div className="flex gap-7">
@@ -39,23 +63,54 @@ const StudentDetails = () => {
         <div className="space-y-1.5">
           <div className="flex items-center gap-2">
             <h2 className="text-2xl font-bold capitalize">
-              {postData?.firstName} {postData?.lastName}
+              {studentData?.firstName} {studentData?.lastName}
             </h2>
           </div>
           <p className="text-sm">
             StudentId:{" "}
-            <span className="font-semibold">{postData?.studentId}</span>
+            <span className="font-semibold">{studentData?.studentId}</span>
           </p>
 
           <div className="flex items-center gap-2">
-            <p>{postData?.phone}</p>
-            <p>{postData?.email}</p>
+            <p>{studentData?.phone}</p>
+            <p>{studentData?.email}</p>
           </div>
-          <div className="flex items-center gap-2">
-            <Button size="sm">Edit</Button>
-            <Button size="sm" className="bg-red-400 hover:bg-red-600">
-              Remove
-            </Button>
+          <div className="w-full flex items-center gap-2">
+            <Link
+              className=""
+              href={`/dashboard/students/update/${studentData?._id}`}
+            >
+              <Button size="sm" className="px-3">
+                Edit
+              </Button>
+            </Link>
+            {/* remove */}
+            <Dialog>
+              <DialogTrigger className="py-1 px-2 rounded-lg bg-red-400 text-white">
+                Remove
+              </DialogTrigger>
+              <DialogContent className="bg-slate-700 text-white">
+                <DialogHeader>
+                  <DialogTitle>
+                    Are you sure you want to delete this student?
+                  </DialogTitle>
+                  <DialogDescription className="py-1 text-sm">
+                    This action cannot be undone. This will permanently delete
+                    your account and remove your data from servers.
+                  </DialogDescription>
+                </DialogHeader>
+                <Link href="/dashboard/students">
+                  {" "}
+                  <Button
+                    onClick={() => handleDelete(studentData?._id)}
+                    size="sm"
+                    className="bg-red-400 px-6 hover:bg-red-600"
+                  >
+                    Confrim Delete
+                  </Button>
+                </Link>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
       </div>
@@ -65,46 +120,46 @@ const StudentDetails = () => {
           <h3 className="text-xl font-semibold">ClassInfo</h3>
           <h4 className="flex">
             {" "}
-            Session: <p className="pl-2">{postData?.classInfo.session}</p>
+            Session: <p className="pl-2">{studentData?.classInfo.session}</p>
           </h4>
           <span className="flex">
             {" "}
-            Group: <p className="pl-2">{postData?.classInfo.group}</p>
+            Group: <p className="pl-2">{studentData?.classInfo.group}</p>
           </span>
           <span className="flex">
             {" "}
-            Section: <p className="pl-2">{postData?.classInfo.section}</p>
+            Section: <p className="pl-2">{studentData?.classInfo.section}</p>
           </span>
           <span className="flex">
-            Class: <p className="pl-2">{postData?.classInfo.class}</p>
+            Class: <p className="pl-2">{studentData?.classInfo.class}</p>
           </span>
         </div>
         <div className="space-y-2">
           <div>
             <h3 className="font-semibold">Adress</h3>
-            <p>{postData?.address}</p>
+            <p>{studentData?.address}</p>
           </div>
           <div>
             <h3 className="font-semibold">Gender</h3>
-            <p>{postData?.gender}</p>
+            <p>{studentData?.gender}</p>
           </div>
           <div>
             <h3 className="font-semibold">Status</h3>
-            <p>{`${postData?.status}`}</p>
+            <p>{`${studentData?.status}`}</p>
           </div>
         </div>
         <div className="space-y-2">
           <div>
             <h3 className="font-semibold">Joined</h3>
-            <p>{postData?.registrationDate}</p>
+            <p>{studentData?.registrationDate}</p>
           </div>
           <div>
             <h3 className="font-semibold">Birthdate</h3>
-            <p>{postData?.birthdate}</p>
+            <p>{studentData?.birthdate}</p>
           </div>
           <div>
             <h3 className="font-semibold">Blood Group</h3>
-            <p>{`${postData?.bloodGroup}`}</p>
+            <p>{`${studentData?.bloodGroup}`}</p>
           </div>
         </div>
       </div>
