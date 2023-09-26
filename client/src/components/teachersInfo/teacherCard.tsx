@@ -26,7 +26,10 @@ const TeacherCard: React.FC<TeacherCardProps> = ({ teacher }) => {
   }, []);
 
   return (
-    <div className="shadow-md rounded-md p-4 hover:shadow-lg transition duration-100 ease-in-out transform hover:scale-105 border border-gray-300">
+    <div
+      className="shadow-md rounded-md p-4 hover:shadow-lg transition duration-100 ease-in-out transform hover:scale-105 border-gray-800"
+      style={{ minHeight: "400px" }}
+    >
       <div className="flex flex-col items-center space-y-4">
         {isLoading ? (
           <div className="animate-pulse">

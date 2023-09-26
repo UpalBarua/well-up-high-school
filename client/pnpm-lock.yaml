@@ -44,6 +44,9 @@ dependencies:
   '@types/uuid':
     specifier: ^9.0.3
     version: 9.0.3
+  aos:
+    specifier: ^2.3.4
+    version: 2.3.4
   autoprefixer:
     specifier: 10.4.15
     version: 10.4.15(postcss@8.4.29)
@@ -113,6 +116,9 @@ dependencies:
   sharp:
     specifier: ^0.32.5
     version: 0.32.5
+  swiper:
+    specifier: ^10.3.0
+    version: 10.3.0
   tailwind-merge:
     specifier: ^1.14.0
     version: 1.14.0
@@ -127,10 +133,15 @@ dependencies:
     version: 5.2.2
   uuid:
     specifier: ^9.0.0
-    version: 9.0.0
+    version: 9.0.1
   zod:
     specifier: ^3.22.2
     version: 3.22.2
+
+devDependencies:
+  '@types/aos':
+    specifier: ^3.0.5
+    version: 3.0.5
 
 packages:
 
@@ -3478,6 +3489,10 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
+  /@types/aos@3.0.5:
+    resolution: {integrity: sha512-/WgEUKc4VYRlHJGUd90xkZbuWGaooB1y6KxUflOj6jNr4JQBFNUe/NRUgKVdo6WDYTD7Mt76/eS/A4iztaOFGQ==}
+    dev: true
+
   /@types/estree@1.0.1:
     resolution: {integrity: sha512-LG4opVs2ANWZ1TJoKc937iMmNstM/d0ae1vNbnBvBhqCSezgVUOzcLCqbI5elV8Vy6WKwKjaqR+zO9VKirBBCA==}
     dev: false
@@ -3726,6 +3741,14 @@ packages:
     dependencies:
       normalize-path: 3.0.0
       picomatch: 2.3.1
+    dev: false
+
+  /aos@2.3.4:
+    resolution: {integrity: sha512-zh/ahtR2yME4I51z8IttIt4lC1Nw0ktsFtmeDzID1m9naJnWXhCoARaCgNOGXb5CLy3zm+wqmRAEgMYB5E2HUw==}
+    dependencies:
+      classlist-polyfill: 1.2.0
+      lodash.debounce: 4.0.8
+      lodash.throttle: 4.1.1
     dev: false
 
   /appdirsjs@1.2.7:
@@ -4185,6 +4208,10 @@ packages:
     resolution: {integrity: sha512-jFI8IQw4hczaL4ALINxqLEXQbWcNjoSkloa4IaufXCJr6QawJyw7tuRysRsrE8w2p/4gGaxKIt/hX3qz/IbD1A==}
     dependencies:
       clsx: 2.0.0
+    dev: false
+
+  /classlist-polyfill@1.2.0:
+    resolution: {integrity: sha512-GzIjNdcEtH4ieA2S8NmrSxv7DfEV5fmixQeyTmqmRmRJPGpRBaSnA2a0VrCjyT8iW8JjEdMbKzDotAJf+ajgaQ==}
     dev: false
 
   /cli-cursor@3.1.0:
@@ -8277,6 +8304,11 @@ packages:
       react: 18.2.0
     dev: false
 
+  /swiper@10.3.0:
+    resolution: {integrity: sha512-o81KZH4phL/dJxKFWpZ/zf78QxOyFMood+c86vJJO0ZeSOoniyzV8HWDsw12KOlQdm4WRxrc/6kfGImAcxcS3w==}
+    engines: {node: '>= 4.7.0'}
+    dev: false
+
   /tailwind-merge@1.14.0:
     resolution: {integrity: sha512-3mFKyCo/MBcgyOTlrY8T7odzZFx+w+qKSMAmdFzRvqBfLlSigU6TZnlFHK0lkMwj9Bj8OYU+9yW9lmGuS0QEnQ==}
     dev: false
@@ -8651,8 +8683,8 @@ packages:
     engines: {node: '>= 0.4.0'}
     dev: false
 
-  /uuid@9.0.0:
-    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
+  /uuid@9.0.1:
+    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
     hasBin: true
     dev: false
 
