@@ -9,8 +9,8 @@ import CustomButton from "./CustomButton";
 
 const ContactUs = () => {
   return (
-    <div className="flex flex-col lg:flex-row lg:justify-evenly ">
-      <div>
+    <div className="flex flex-col items-center lg:flex-row lg:justify-evenly my-5 py-5 bg-red-100 h-full w-full">
+      <div data-aos="fade-right">
         <div>
           <h1 className="text-[2.2rem] text-blue-600 pb-2 font-bold">
             Get In Touch
@@ -21,7 +21,7 @@ const ContactUs = () => {
         </div>
         <div>
           <Input
-            className="mb-4 h-14 bg-blue-50 "
+            className="mb-4 h-14 bg-blue-50"
             type="text"
             placeholder="Enter your name"
           />
@@ -31,21 +31,21 @@ const ContactUs = () => {
             placeholder="Enter your email"
           />
           <Textarea
-            className="bg-blue-50  h-36"
+            className="bg-blue-50 h-36"
             placeholder="Go ahead, we are listening...."
           />
         </div>
         <CustomButton className="px-6 w-full">Submit</CustomButton>
       </div>
 
-      <div className="mt-6 lg:mt-10">
+      <div data-aos="fade-left">
         <div>
           <Image src={contact} alt="" height={300} width={300}></Image>
         </div>
         <div className="flex flex-col mt-6">
           <div className="flex gap-6 items-center pb-4">
             <PiMapPinLineBold className="text-[1.6rem] text-blue-600 "></PiMapPinLineBold>
-            <h1>674 Warless ,Chittagong</h1>
+            <h1>674 Warless, Chittagong</h1>
           </div>
           <div className="flex gap-6 items-center pb-4">
             <BiSolidPhoneCall className="text-[1.6rem] text-blue-600"></BiSolidPhoneCall>
